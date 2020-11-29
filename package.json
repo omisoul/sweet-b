@@ -14,7 +14,7 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "format": "prettier \"**/*.{js,css,html}\" --write",
-    "lint": "eslint \"**/*.{js,jsx}\" --quiet",
+    "lint": "eslint \"**/*.{js,jsx}\" --quiets",
     "dev": "parcel public/index.html"
   },
   "eslintConfig": {
