@@ -23,7 +23,46 @@ export const auth = firebase.auth();
 
 export const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signOut = () => auth.signOut();
 
+export const createUserProfileDoc = async (user, additionalData) => {
+  if (!user) return;
+
+  const userRef = firestore.doc(`users/${user.uid}`);
+
+  const snapshot = await userRef.get();
+
+  if (!snapshot.exists) {
+    const { displayName, email, photoURL } = user;
+    const createdAt = new Date();
+    const role = "customer";
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        photoURL,
+        role,
+        ...additionalData,
+      });
+    } catch (error) {
+      console.error("Error creating user", error.message);
+    }
+  }
+
+  return getUserDoc(user.uid);
+};
+
+export const getUserDoc = async (uid) => {
+  if (!uid) return null;
+
+  try {
+    const userDoc = await firestore.collection("users").doc(uid).get();
+
+    return { uid, ...userDoc.data() };
+  } catch (error) {
+    console.error("Error fetching the user", error.message);
+  }
+};
 export const getTimestamp = (date) => {
   return firebase.firestore.Timestamp.fromDate(date);
 };

@@ -92,9 +92,7 @@ const ItemView = ({ location }) => {
                 addToCart(product, amount);
               }}
             >
-              <span className="btn-text">
-              Add to Cart
-              </span>
+              <span className="btn-text">Add to Cart</span>
             </button>
           </div>
         </div>

@@ -4,13 +4,12 @@ import App from "./App";
 import ProductsProvider from "./providers/ProductsProvider";
 import UsersProviders from "./providers/UsersProviders";
 
-
 ReactDOM.render(
   <React.StrictMode>
     <UsersProviders>
-    <ProductsProvider>
-      <App />
-    </ProductsProvider>
+      <ProductsProvider>
+        <App />
+      </ProductsProvider>
     </UsersProviders>
   </React.StrictMode>,
   document.getElementById("root")

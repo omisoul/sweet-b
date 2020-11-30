@@ -1,10 +1,9 @@
-import React, {useContext, useEffect} from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { signInWithGoogle, auth } from "../firebase";
+import { signInWithGoogle, signOut } from "../firebase";
 import { UsersContext } from "../providers/UsersProviders";
 const Navbar = () => {
-  const [user,setUser] = useContext(UsersContext)
-
+  const [user] = useContext(UsersContext);
   return (
     <nav>
       <div>Sweet B's</div>
@@ -13,7 +12,24 @@ const Navbar = () => {
         <Link to="/cart" className="nav-btn">
           Cart
         </Link>
-        <button className="nav-btn" onClick={signInWithGoogle}><span className="btn-text">Login</span></button>
+        {user ? (
+          <button className="nav-btn" onClick={signOut}>
+            <span className="btn-text"></span>Sign Out
+          </button>
+        ) : (
+          <button className="nav-btn" onClick={signInWithGoogle}>
+            <span className="btn-text">Login</span>
+          </button>
+        )}
+        {user ? (
+          user.role == "admin" && (
+            <Link to="/admin-dashboard" className="nav-btn">
+              Admin Dashboard
+            </Link>
+          )
+        ) : (
+          <p></p>
+        )}
       </div>
     </nav>
   );
