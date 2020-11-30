@@ -74747,7 +74747,7 @@ const AdminSidebar = ({
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "admin-sidebar"
   }, /*#__PURE__*/_react.default.createElement("h3", null, "Menu"), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-    to: "/admin-dashboard/"
+    to: "/admin-dashboard"
   }, "Dashboard"), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "/admin-dashboard/add-product"
   }, "Add Product"), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
@@ -74755,6 +74755,8 @@ const AdminSidebar = ({
   }, "View Products"), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "/admin-dashboard/view-orders"
   }, "View Orders"), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+    to: "/admin-dashboard/users-list"
+  }, "Users List"), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "/"
   }, "Back to Catalog"));
 };
@@ -75053,7 +75055,7 @@ const UpdateItemView = () => {
 
 var _default = UpdateItemView;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../providers/ProductsProvider":"../src/providers/ProductsProvider.js","../firebase":"../src/firebase.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../src/pages/DashboardView.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../providers/ProductsProvider":"../src/providers/ProductsProvider.js","../firebase":"../src/firebase.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../src/components/UsersListItem.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -75063,15 +75065,154 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _firebase = require("../firebase");
+
+var _xBtn = _interopRequireDefault(require("../res/x-btn.svg"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const handleDelete = async userID => {
+  await _firebase.firestore.collection('users').doc(userID).delete();
+};
+
+const UsersListItem = ({
+  user
+}) => {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "usersList"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "usernames"
+  }, /*#__PURE__*/_react.default.createElement("p", {
+    className: "username"
+  }, user.displayName), /*#__PURE__*/_react.default.createElement("p", {
+    className: "user-email"
+  }, user.email), /*#__PURE__*/_react.default.createElement("input", {
+    type: "image",
+    src: _xBtn.default,
+    alt: "remove",
+    onClick: () => {
+      handleDelete(user.id);
+    }
+  })));
+};
+
+var _default = UsersListItem;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../firebase":"../src/firebase.js","../res/x-btn.svg":"../src/res/x-btn.svg"}],"../src/providers/UsersListProvider.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.UsersListContext = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _firebase = require("../firebase");
+
+var _utilities = require("../utilities");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const UsersListContext = (0, _react.createContext)();
+exports.UsersListContext = UsersListContext;
+
+const UsersListProvider = props => {
+  const [usersList, setUsersList] = (0, _react.useState)([]);
+  let unsubscribe = null;
+  (0, _react.useEffect)(() => {
+    async function fetchProducts() {
+      unsubscribe = _firebase.firestore.collection('users').onSnapshot(snapshot => {
+        const users = snapshot.docs.map(_utilities.collectIdAndDocs);
+        setUsersList(users);
+        console.log(users);
+      });
+    }
+
+    fetchProducts();
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  return /*#__PURE__*/_react.default.createElement(UsersListContext.Provider, {
+    value: usersList
+  }, props.children);
+};
+
+var _default = UsersListProvider;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../firebase":"../src/firebase.js","../utilities":"../src/utilities.js"}],"../src/pages/DashboardView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _UsersListItem = _interopRequireDefault(require("../components/UsersListItem"));
+
+var _UsersListProvider = require("../providers/UsersListProvider");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 const DashboardView = () => {
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null, "Test"));
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "user-list-page"
+  }, /*#__PURE__*/_react.default.createElement("p", null, "Test"));
 };
 
 var _default = DashboardView;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"../src/components/AdminDashboard.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../components/UsersListItem":"../src/components/UsersListItem.js","../providers/UsersListProvider":"../src/providers/UsersListProvider.js"}],"../src/pages/UsersListView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _UsersListItem = _interopRequireDefault(require("../components/UsersListItem"));
+
+var _UsersListProvider = require("../providers/UsersListProvider");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const UsersListView = () => {
+  const users = (0, _react.useContext)(_UsersListProvider.UsersListContext);
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "user-list-page"
+  }, /*#__PURE__*/_react.default.createElement("h2", {
+    className: "user-list-heading"
+  }, "Administration"), users.map(user => user.role === "admin" ? /*#__PURE__*/_react.default.createElement(_UsersListItem.default, {
+    key: user.id,
+    user: user
+  }) : ""), /*#__PURE__*/_react.default.createElement("hr", {
+    className: "user-line"
+  }), /*#__PURE__*/_react.default.createElement("h2", {
+    className: "user-list-heading"
+  }, "Customers"), users.map(user => user.role === "customer" ? /*#__PURE__*/_react.default.createElement(_UsersListItem.default, {
+    key: user.id,
+    user: user
+  }) : ""));
+};
+
+var _default = UsersListView;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../components/UsersListItem":"../src/components/UsersListItem.js","../providers/UsersListProvider":"../src/providers/UsersListProvider.js"}],"../src/components/AdminDashboard.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -75093,6 +75234,8 @@ var _DashboardView = _interopRequireDefault(require("../pages/DashboardView"));
 
 var _reactRouterDom = require("react-router-dom");
 
+var _UsersListView = _interopRequireDefault(require("../pages/UsersListView"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -75105,14 +75248,14 @@ const AdminDashboard = () => {
   console.log(location.pathname == "/admin-dashboard/update-product/:id");
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "admin-dashboard"
-  }, /*#__PURE__*/_react.default.createElement(_AdminSidebar.default, null), location.pathname == "/admin-dashboard/" && /*#__PURE__*/_react.default.createElement(_DashboardView.default, null), location.pathname == "/admin-dashboard/add-product" && /*#__PURE__*/_react.default.createElement(_AddItemView.default, null), location.pathname == "/admin-dashboard/view-products" && /*#__PURE__*/_react.default.createElement(_ProductView.default, {
+  }, /*#__PURE__*/_react.default.createElement(_AdminSidebar.default, null), location.pathname == "/admin-dashboard" && /*#__PURE__*/_react.default.createElement(_DashboardView.default, null), location.pathname == "/admin-dashboard/add-product" && /*#__PURE__*/_react.default.createElement(_AddItemView.default, null), location.pathname == "/admin-dashboard/view-products" && /*#__PURE__*/_react.default.createElement(_ProductView.default, {
     setProductID: setProductID
-  }), location.pathname == `/admin-dashboard/update-product/${productID}` && /*#__PURE__*/_react.default.createElement(_UpdateItemView.default, null));
+  }), location.pathname == `/admin-dashboard/update-product/${productID}` && /*#__PURE__*/_react.default.createElement(_UpdateItemView.default, null), location.pathname == "/admin-dashboard/users-list" && /*#__PURE__*/_react.default.createElement(_UsersListView.default, null));
 };
 
 var _default = AdminDashboard;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./AdminSidebar":"../src/components/AdminSidebar.js","../pages/AddItemView":"../src/pages/AddItemView.js","../pages/ProductView":"../src/pages/ProductView.js","../pages/UpdateItemView":"../src/pages/UpdateItemView.js","../pages/DashboardView":"../src/pages/DashboardView.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../src/pages/AdminDashboardView.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./AdminSidebar":"../src/components/AdminSidebar.js","../pages/AddItemView":"../src/pages/AddItemView.js","../pages/ProductView":"../src/pages/ProductView.js","../pages/UpdateItemView":"../src/pages/UpdateItemView.js","../pages/DashboardView":"../src/pages/DashboardView.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../pages/UsersListView":"../src/pages/UsersListView.js"}],"../src/pages/AdminDashboardView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -75189,12 +75332,14 @@ var _App = _interopRequireDefault(require("./App"));
 
 var _ProductsProvider = _interopRequireDefault(require("./providers/ProductsProvider"));
 
+var _UsersListProvider = _interopRequireDefault(require("./providers/UsersListProvider"));
+
 var _UsersProviders = _interopRequireDefault(require("./providers/UsersProviders"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom.default.render( /*#__PURE__*/_react.default.createElement(_react.default.StrictMode, null, /*#__PURE__*/_react.default.createElement(_UsersProviders.default, null, /*#__PURE__*/_react.default.createElement(_ProductsProvider.default, null, /*#__PURE__*/_react.default.createElement(_App.default, null)))), document.getElementById("root"));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./App":"../src/App.js","./providers/ProductsProvider":"../src/providers/ProductsProvider.js","./providers/UsersProviders":"../src/providers/UsersProviders.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+_reactDom.default.render( /*#__PURE__*/_react.default.createElement(_react.default.StrictMode, null, /*#__PURE__*/_react.default.createElement(_UsersListProvider.default, null, /*#__PURE__*/_react.default.createElement(_UsersProviders.default, null, /*#__PURE__*/_react.default.createElement(_ProductsProvider.default, null, /*#__PURE__*/_react.default.createElement(_App.default, null))))), document.getElementById("root"));
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./App":"../src/App.js","./providers/ProductsProvider":"../src/providers/ProductsProvider.js","./providers/UsersListProvider":"../src/providers/UsersListProvider.js","./providers/UsersProviders":"../src/providers/UsersProviders.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -75222,7 +75367,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64220" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49834" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

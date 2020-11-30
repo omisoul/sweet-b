@@ -407,5 +407,35 @@ a {
   outline: 2px solid #9377e2;
 }
 
+.user-list-page{
+  width: 90%;
+  padding: 0 2% 0 2%;
+
+}
+.user-list-heading {
+  text-align: center;
+}
+.usersList {
+  padding: 0 20px 0 20px;
+  margin-bottom: 10px;
+}
+.usernames {
+  display: flex;
+  width: fit-content;
+}
+.username {
+  width: 15em;
+  font-weight: bold;
+}
+.user-email {
+  width: 20em;
+}
+.user-line {
+  background-color: black;
+  border: 1px solid black;
+  width: 80%;
+}
+
+
 
 /*# sourceMappingURL=/style.251b6741.css.map */
