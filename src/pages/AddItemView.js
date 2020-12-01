@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { firestore } from "../firebase";
-
+import { firestore, storage } from "../firebase";
 
 const AddItemView = () => {
   const [name, setName] = useState("");
@@ -8,23 +7,44 @@ const AddItemView = () => {
   const [flavor, setFlavor] = useState("");
   const [description, setDescription] = useState("");
   const [productType, setProductType] = useState("");
+  let imageInput = null;
 
-  const addProduct = async () =>{
-      let product = {
-          name,
-          price,
-          flavor,
-          description,
-          productType
-      }
-      let docRef = await firestore.collection('products').add(product);
-      console.log(docRef);
-  }
+  const addProduct = async () => {
+    let product = {
+      name,
+      price,
+      flavor,
+      description,
+      productType,
+    };
+    let docRef = await firestore.collection("products").add(product);
+    console.log(docRef);
+    if (getFile()) {
+      let productDoc = await docRef.get();
+      storage
+        .ref()
+        .child("products")
+        .child(productType)
+        .child(`${productDoc.id}`)
+        .put(getFile())
+        .then((res) => res.ref.getDownloadURL())
+        .then((image) => docRef.update({ image }));
+    }
+  };
+
+  const getFile = () => {
+    return imageInput && imageInput.files[0];
+  };
   return (
     <div className="add-item-view">
-      <form action="" onSubmit={(e) => {
+      <form
+        action=""
+        onSubmit={(e) => {
           e.preventDefault();
-          addProduct()}}>
+          addProduct();
+        }}
+        required
+      >
         <label htmlFor="">Product Name</label>
         <input
           type="text"
@@ -32,6 +52,7 @@ const AddItemView = () => {
           onChange={(e) => {
             setName(e.target.value);
           }}
+          required
         />
         <label htmlFor="">Product Price</label>
         <input
@@ -40,6 +61,7 @@ const AddItemView = () => {
           onChange={(e) => {
             setPrice(e.target.value);
           }}
+          required
         />
         <label htmlFor="">Product Description</label>
         <textarea
@@ -49,6 +71,7 @@ const AddItemView = () => {
           onChange={(e) => {
             setDescription(e.target.value);
           }}
+          required
         />
         <label htmlFor="">Product Type</label>
         <input
@@ -57,6 +80,7 @@ const AddItemView = () => {
           onChange={(e) => {
             setProductType(e.target.value);
           }}
+          required
         />
         <label htmlFor="">Product Flavor</label>
         <input
@@ -65,8 +89,16 @@ const AddItemView = () => {
           onChange={(e) => {
             setFlavor(e.target.value);
           }}
+          required
         />
-        <input type="submit" value="Add Product" className="btn"/>
+        <input
+          type="file"
+          name=""
+          id=""
+          ref={(ref) => (imageInput = ref)}
+          required
+        />
+        <input type="submit" value="Add Product" className="btn" />
       </form>
     </div>
   );

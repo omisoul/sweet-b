@@ -46,7 +46,9 @@ const CartView = () => {
               <p>${getTotal()}</p>
             </div>
           )}
-          <button className="btn">Checkout</button>
+          <Link to="/checkout" className="nav-btn">
+            Checkout
+          </Link>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import AdminDashboard from "../components/AdminDashboard";
 import { UsersContext } from "../providers/UsersProviders";
 
 const AdminDashboardView = () => {
-  const [user] = useContext(UsersContext);
+  const user = useContext(UsersContext);
   return (
     <div>
       {user ? (

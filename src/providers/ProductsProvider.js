@@ -6,19 +6,19 @@ export const ProductsContext = createContext();
 
 const ProductsProvider = (props) => {
   const [products, setProducts] = useState([]);
-  let unsubscribe = null
+  let unsubscribe = null;
   useEffect(() => {
     async function fetchProducts() {
-      unsubscribe = firestore.collection('products').onSnapshot(snapshot => {
-        const prods = snapshot.docs.map(collectIdAndDocs)
-        setProducts(prods)
-    })
+      unsubscribe = firestore.collection("products").onSnapshot((snapshot) => {
+        const prods = snapshot.docs.map(collectIdAndDocs);
+        setProducts(prods);
+      });
     }
 
     fetchProducts();
-    return () =>{
+    return () => {
       unsubscribe();
-    }
+    };
   }, []);
   return (
     <ProductsContext.Provider value={products}>

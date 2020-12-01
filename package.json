@@ -11,22 +11,23 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "parcel build public/index.html --out-dir build",
     "eject": "react-scripts eject",
     "format": "prettier \"**/*.{js,css,html}\" --write",
     "lint": "eslint \"**/*.{js,jsx}\" --quiet",
-    "dev": "parcel public/index.html"
+    "dev": "parcel public/index.html",
+    "deploy": "yarn build && firebase deploy --only hosting,storage,firestore"
   },
   "eslintConfig": {
     "extends": [
-      "react-app"
+      "airbnb"
     ]
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "last 4 chrome version",
+      "last 4 firefox version",
+      "last 4 safari version"
     ],
     "development": [
       "last 1 chrome version",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "eslint": "^7.12.1",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^6.15.0",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.1.2"

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { signInWithGoogle, signOut } from "../firebase";
 import { UsersContext } from "../providers/UsersProviders";
 const Navbar = () => {
-  const [user] = useContext(UsersContext);
+  const user = useContext(UsersContext);
   return (
     <nav>
       <div>Sweet B's</div>

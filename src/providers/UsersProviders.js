@@ -14,9 +14,8 @@ const UsersProviders = (props) => {
   }, []);
   console.log(user);
   return (
-    <UsersContext.Provider value={[user, setUser]}>
-      {props.children}
-    </UsersContext.Provider>
+    // <UsersContext.Provider value={[user, setUser]}>
+    <UsersContext.Provider value={user}>{props.children}</UsersContext.Provider>
   );
 };
 
