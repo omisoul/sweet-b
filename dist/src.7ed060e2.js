@@ -79143,7 +79143,7 @@ const UserInfoView = () => {
   console.log(orderList);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "edit-user"
-  }, /*#__PURE__*/_react.default.createElement("h2", null, "Overview"), /*#__PURE__*/_react.default.createElement("form", {
+  }, /*#__PURE__*/_react.default.createElement("h1", null, "User Information"), /*#__PURE__*/_react.default.createElement("h2", null, "Overview"), /*#__PURE__*/_react.default.createElement("form", {
     className: "edit-user-form"
   }, /*#__PURE__*/_react.default.createElement("input", {
     disabled: true,
@@ -79179,21 +79179,25 @@ const UserInfoView = () => {
   }, "Kingston"), /*#__PURE__*/_react.default.createElement("option", {
     value: "Portmore"
   }, "Portmore"))), /*#__PURE__*/_react.default.createElement("button", {
-    className: "edit-user-btn",
+    className: "btn",
     hidden: isHidden,
     onClick: () => {
       setEdit(true);
       setIsHidden(!isHidden);
     }
-  }, "Edit Info"), /*#__PURE__*/_react.default.createElement("button", {
-    className: "edit-user-btn",
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    className: "btn-text"
+  }, "Edit Info")), /*#__PURE__*/_react.default.createElement("button", {
+    className: "btn",
     hidden: !isHidden,
     onClick: () => {
       setEdit(false);
       setIsHidden(!isHidden);
       updateUser();
     }
-  }, "Update"), /*#__PURE__*/_react.default.createElement("h2", null, "Orders"), user.orders && orderList.map(order => /*#__PURE__*/_react.default.createElement(_OrderListItem.default, {
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    className: "btn-text"
+  }, "Update")), /*#__PURE__*/_react.default.createElement("h2", null, "Orders"), user.orders && orderList.map(order => /*#__PURE__*/_react.default.createElement(_OrderListItem.default, {
     key: order,
     user: user,
     orderList: order
@@ -79258,7 +79262,9 @@ const OrderList = ({
       pathname: `/admin-dashboard/order/${order.id}`
     },
     className: "username"
-  }, order.id), /*#__PURE__*/_react.default.createElement("input", {
+  }, order.id), /*#__PURE__*/_react.default.createElement("p", {
+    className: "order-status"
+  }, order.status), /*#__PURE__*/_react.default.createElement("input", {
     type: "image",
     src: _xBtn.default,
     alt: "remove",
@@ -80453,7 +80459,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53511" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49814" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

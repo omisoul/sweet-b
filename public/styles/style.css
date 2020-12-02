@@ -426,6 +426,7 @@ a {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
+  color: #9377e2;
 }
 
 .user-list-heading {
@@ -444,6 +445,10 @@ a {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+}
+
+.usernames a {
+  color: #9377e2;
 }
 
 .username {
@@ -466,7 +471,7 @@ a {
   width: 100%;
 }
 
-.edit-user > h2 {
+.edit-user > h1 {
   text-align: center;
 }
 
@@ -490,5 +495,26 @@ a {
   border-bottom: 2px solid black;
   margin-bottom: 10px;
   width: 25%;
+}
+
+.order-items {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 2fr 3fr 2fr 1fr;
+      grid-template-columns: 2fr 3fr 2fr 1fr;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.order-items a {
+  color: #9377e2;
+}
+
+.order-status {
+  color: #3f3737;
 }
 /*# sourceMappingURL=style.css.map */

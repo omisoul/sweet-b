@@ -36,6 +36,7 @@ const OrderList = ({ order }) => {
         >
           {order.id}
         </Link>
+        <p className="order-status">{order.status}</p>
         <input
           type="image"
           src={xBtn}

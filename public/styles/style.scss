@@ -324,6 +324,7 @@ a {
 
   a {
     align-self: center;
+    color: #9377e2;
   }
 }
 .user-list-heading {
@@ -336,6 +337,10 @@ a {
 .usernames {
   display: flex;
   width: fit-content;
+
+  a {
+    color: #9377e2;
+  }
 }
 .username {
   width: 15em;
@@ -355,7 +360,7 @@ a {
   width: 100%;
 }
 
-.edit-user > h2 {
+.edit-user > h1 {
   text-align: center;
 }
 
@@ -379,4 +384,19 @@ a {
   border-bottom: 2px solid black;
   margin-bottom: 10px;
   width: 25%;
+}
+
+.order-items {
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr 1fr;
+  justify-content: center;
+  align-items: center;
+
+  a {
+    color: #9377e2;
+  }
+}
+
+.order-status {
+  color: rgb(63, 55, 55);
 }
