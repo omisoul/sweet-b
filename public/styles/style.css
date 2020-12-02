@@ -1,10 +1,10 @@
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   padding: 0;
   margin: 0;
   font-size: 18px;
   -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+          box-sizing: border-box;
   color: #232323;
 }
 
@@ -14,12 +14,12 @@ body {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 button {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 nav {
@@ -27,11 +27,11 @@ nav {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 30px 60px;
 }
 
@@ -61,11 +61,11 @@ nav .nav-btn {
   display: -ms-grid;
   display: grid;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   justify-items: center;
   -ms-grid-columns: 4fr 5fr 2fr;
-  grid-template-columns: 4fr 5fr 2fr;
+      grid-template-columns: 4fr 5fr 2fr;
 }
 
 .item-con a {
@@ -83,7 +83,7 @@ nav .nav-btn {
 .item-con h1 {
   font-size: 36px;
   margin: 5px 0;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-weight: 700;
 }
 
@@ -125,15 +125,15 @@ nav .nav-btn {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   border-radius: 5px;
   background-color: #ffffff;
   -webkit-box-shadow: 2px 4px 16px -3px rgba(0, 0, 0, 0.12);
-  box-shadow: 2px 4px 16px -3px rgba(0, 0, 0, 0.12);
+          box-shadow: 2px 4px 16px -3px rgba(0, 0, 0, 0.12);
 }
 
 .amount-con button {
@@ -163,7 +163,23 @@ nav .nav-btn {
   background-size: cover;
   height: 400px;
   width: 400px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   border-radius: 50%;
+}
+
+.product-image {
+  height: 350px;
+  width: 350px;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .other-product {
@@ -197,10 +213,10 @@ a {
 .catalog-grid {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr) [4];
-  grid-template-columns: repeat(4, 1fr);
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
   -webkit-column-gap: 20px;
-  column-gap: 20px;
+          column-gap: 20px;
   padding: 10px 60px;
 }
 
@@ -229,7 +245,7 @@ a {
   width: 100%;
   max-height: 200px;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   border-bottom: 1px solid #232323;
 }
 
@@ -237,7 +253,7 @@ a {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 7fr 3fr;
-  grid-template-columns: 7fr 3fr;
+      grid-template-columns: 7fr 3fr;
   height: 100vh;
 }
 
@@ -258,11 +274,11 @@ a {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .order-summary-item {
@@ -270,11 +286,11 @@ a {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .order-summary-desc p:nth-child(1) {
@@ -289,11 +305,11 @@ a {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 2fr 4fr 2fr 1fr;
-  grid-template-columns: 2fr 4fr 2fr 1fr;
+      grid-template-columns: 2fr 4fr 2fr 1fr;
   margin: 0 0 20px 0;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .cart-item-img {
@@ -307,8 +323,8 @@ a {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: 0 60px;
 }
 
@@ -325,7 +341,7 @@ a {
 }
 
 .cart-desc-con h3 {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   margin: 5px;
   font-weight: 700;
 }
@@ -356,8 +372,8 @@ a {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   padding: 30px;
 }
 
@@ -415,11 +431,17 @@ a {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.user-list-page a {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 .user-list-heading {
@@ -463,13 +485,19 @@ a {
 .edit-user > h2 {
   text-align: center;
 }
+
 .edit-user-form > select {
   width: 25%;
 }
 
 .edit-user-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .edit-user-input {
@@ -479,5 +507,4 @@ a {
   margin-bottom: 10px;
   width: 25%;
 }
-
 /*# sourceMappingURL=style.css.map */

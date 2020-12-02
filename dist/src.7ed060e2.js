@@ -77891,14 +77891,14 @@ require("firebase/storage");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBDFN7Xe1z0MhGVfYaKw5JZoNc6a_Z7D8Q",
-  authDomain: "sweet-bs.firebaseapp.com",
-  databaseURL: "https://sweet-bs.firebaseio.com",
-  projectId: "sweet-bs",
-  storageBucket: "sweet-bs.appspot.com",
-  messagingSenderId: "540013480402",
-  appId: "1:540013480402:web:29a0198a514bd4182da00b",
-  measurementId: "G-0JD0VJXZCF"
+  apiKey: 'AIzaSyBDFN7Xe1z0MhGVfYaKw5JZoNc6a_Z7D8Q',
+  authDomain: 'sweet-bs.firebaseapp.com',
+  databaseURL: 'https://sweet-bs.firebaseio.com',
+  projectId: 'sweet-bs',
+  storageBucket: 'sweet-bs.appspot.com',
+  messagingSenderId: '540013480402',
+  appId: '1:540013480402:web:29a0198a514bd4182da00b',
+  measurementId: 'G-0JD0VJXZCF'
 }; // Initialize Firebase
 
 _app.default.initializeApp(firebaseConfig);
@@ -77939,7 +77939,7 @@ const createUserProfileDoc = async (user, additionalData) => {
       photoURL
     } = user;
     const createdAt = new Date();
-    const role = "customer";
+    const role = 'customer';
 
     try {
       await userRef.set({
@@ -77950,7 +77950,7 @@ const createUserProfileDoc = async (user, additionalData) => {
         ...additionalData
       });
     } catch (error) {
-      console.error("Error creating user", error.message);
+      console.error('Error creating user', error.message);
     }
   }
 
@@ -77963,13 +77963,13 @@ const getUserDoc = async uid => {
   if (!uid) return null;
 
   try {
-    const userDoc = await firestore.collection("users").doc(uid).get();
+    const userDoc = await firestore.collection('users').doc(uid).get();
     return {
       uid,
       ...userDoc.data()
     };
   } catch (error) {
-    console.error("Error fetching the user", error.message);
+    console.error('Error fetching the user', error.message);
   }
 };
 
@@ -78020,7 +78020,7 @@ const UsersContext = (0, _react.createContext)();
 exports.UsersContext = UsersContext;
 
 const UsersProviders = props => {
-  const [user, setUser] = (0, _react.useState)("");
+  const [user, setUser] = (0, _react.useState)('');
   (0, _react.useEffect)(() => {
     const unsubcribe = _firebase.auth.onAuthStateChanged(async userAuth => {
       const user = await (0, _firebase.createUserProfileDoc)(userAuth);
@@ -78154,12 +78154,13 @@ const ItemView = ({
   location
 }) => {
   const productsList = (0, _react.useContext)(_ProductsProvider.ProductsContext);
-  const id = location.pathname.replace("/product/", "");
+  const id = location.pathname.replace('/product/', '');
   const [amount, setAmount] = (0, _react.useState)(1);
   const [product, setProduct] = (0, _react.useState)(location.state || {});
-  const [cart, setCart] = (0, _react.useState)(JSON.parse(localStorage.getItem("cart")) || []);
+  const [cart, setCart] = (0, _react.useState)(JSON.parse(localStorage.getItem('cart')) || []);
+  const [added, setAdded] = (0, _react.useState)(false);
   (0, _react.useEffect)(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
   (0, _react.useEffect)(() => {
     setProduct(() => {
@@ -78174,7 +78175,7 @@ const ItemView = ({
   }, [productsList]);
 
   const addToCart = (product, amount) => {
-    let oldCart = typeof cart == "string" ? JSON.parse(cart) : cart;
+    let oldCart = typeof cart == 'string' ? JSON.parse(cart) : cart;
     let found = false;
 
     for (let i of oldCart) {
@@ -78194,6 +78195,12 @@ const ItemView = ({
         amount: amount
       }]);
     }
+
+    setAdded(true);
+    setTimeout(() => {
+      setAmount(1);
+      setAdded(false);
+    }, 2000);
   };
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Navbar.default, null), /*#__PURE__*/_react.default.createElement("div", {
@@ -78202,7 +78209,7 @@ const ItemView = ({
     className: "price"
   }, /*#__PURE__*/_react.default.createElement("span", null, "Price:"), " ", product.price)), /*#__PURE__*/_react.default.createElement("p", null, product.description), /*#__PURE__*/_react.default.createElement("h3", null, "Flavours"), /*#__PURE__*/_react.default.createElement("div", {
     className: "flavour-con"
-  }), /*#__PURE__*/_react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("div", null, added && /*#__PURE__*/_react.default.createElement("p", null, "Successfully ", amount, " ", product.name, "/s added to cart"), /*#__PURE__*/_react.default.createElement("div", {
     className: "flex-con"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "amount-con"
@@ -78225,9 +78232,13 @@ const ItemView = ({
     }
   }, /*#__PURE__*/_react.default.createElement("span", {
     className: "btn-text"
-  }, "Add to Cart")))), /*#__PURE__*/_react.default.createElement("div", {
+  }, "Add to Cart"))))), /*#__PURE__*/_react.default.createElement("div", {
     className: "product-con"
-  }), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("img", {
+    src: product.image,
+    alt: "",
+    className: "product-image"
+  })), /*#__PURE__*/_react.default.createElement("div", {
     className: "other-products-con"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "other-product bg1"
@@ -78549,6 +78560,8 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRouterDom = require("react-router-dom");
+
 var _firebase = require("../firebase");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -78556,31 +78569,34 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const AddItemView = () => {
-  const [name, setName] = (0, _react.useState)("");
+  const [name, setName] = (0, _react.useState)('');
   const [price, setPrice] = (0, _react.useState)(0);
-  const [flavor, setFlavor] = (0, _react.useState)("");
-  const [description, setDescription] = (0, _react.useState)("");
-  const [productType, setProductType] = (0, _react.useState)("");
+  const [flavor, setFlavor] = (0, _react.useState)('');
+  const [description, setDescription] = (0, _react.useState)('');
+  const [productType, setProductType] = (0, _react.useState)('');
   let imageInput = null;
+  const history = (0, _reactRouterDom.useHistory)();
 
   const addProduct = async () => {
-    let product = {
-      name,
-      price,
-      flavor,
-      description,
-      productType
-    };
-    let docRef = await _firebase.firestore.collection("products").add(product);
-    console.log(docRef);
+    try {
+      let product = {
+        name,
+        price,
+        flavor,
+        description,
+        productType
+      };
+      let docRef = await _firebase.firestore.collection('products').add(product);
+      console.log(docRef);
 
-    if (getFile()) {
-      let productDoc = await docRef.get();
+      if (getFile()) {
+        let productDoc = await docRef.get();
 
-      _firebase.storage.ref().child("products").child(productType).child(`${productDoc.id}`).put(getFile()).then(res => res.ref.getDownloadURL()).then(image => docRef.update({
-        image
-      }));
-    }
+        _firebase.storage.ref().child('products').child(productType).child(`${productDoc.id}`).put(getFile()).then(res => res.ref.getDownloadURL()).then(image => docRef.update({
+          image
+        }));
+      }
+    } catch (error) {}
   };
 
   const getFile = () => {
@@ -78657,7 +78673,7 @@ const AddItemView = () => {
 
 var _default = AddItemView;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../firebase":"../src/firebase.js"}],"../src/components/ProductListItem.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../firebase":"../src/firebase.js"}],"../src/components/ProductListItem.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -78934,10 +78950,9 @@ const UsersListProvider = props => {
   let unsubscribe = null;
   (0, _react.useEffect)(() => {
     async function fetchProducts() {
-      unsubscribe = _firebase.firestore.collection("users").onSnapshot(snapshot => {
+      unsubscribe = _firebase.firestore.collection('users').onSnapshot(snapshot => {
         const users = snapshot.docs.map(_utilities.collectIdAndDocs);
         setUsersList(users);
-        console.log(users);
       });
     }
 
@@ -79098,13 +79113,13 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const UserInfoView = () => {
-  const id = location.pathname.replace("/admin-dashboard/users-list/profile/", "");
+  const id = location.pathname.replace('/admin-dashboard/users-list/profile/', '');
   const users = (0, _react.useContext)(_UsersListProvider.UsersListContext);
   const [user, setUser] = (0, _react.useState)([]);
-  const [telephoneNumber, setTele] = (0, _react.useState)("");
-  const [displayName, setName] = (0, _react.useState)("");
-  const [address, setAddress] = (0, _react.useState)("");
-  const [deliveryLocation, setDeliveryLocation] = (0, _react.useState)("");
+  const [telephoneNumber, setTele] = (0, _react.useState)('');
+  const [displayName, setName] = (0, _react.useState)('');
+  const [address, setAddress] = (0, _react.useState)('');
+  const [deliveryLocation, setDeliveryLocation] = (0, _react.useState)('');
   const [edit, setEdit] = (0, _react.useState)(false);
   const [isHidden, setIsHidden] = (0, _react.useState)(false);
   const [orderList, setOrderList] = (0, _react.useState)([]);
@@ -79130,7 +79145,7 @@ const UserInfoView = () => {
       displayName,
       telephoneNumber
     };
-    let docRef = await _firebase.firestore.collection("users").doc(user.id);
+    let docRef = await _firebase.firestore.collection('users').doc(user.id);
     docRef.update(updatedUser);
   };
 
@@ -79187,7 +79202,7 @@ const UserInfoView = () => {
       setIsHidden(!isHidden);
       updateUser();
     }
-  }, "Update"), /*#__PURE__*/_react.default.createElement("h2", null, "Orders"), orderList.map(order => /*#__PURE__*/_react.default.createElement(_OrderListItem.default, {
+  }, "Update"), /*#__PURE__*/_react.default.createElement("h2", null, "Orders"), user.orders && orderList.map(order => /*#__PURE__*/_react.default.createElement(_OrderListItem.default, {
     key: order,
     user: user,
     orderList: order
@@ -79278,6 +79293,8 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRouterDom = require("react-router-dom");
+
 var _firebase = require("../firebase");
 
 var _UsersProviders = require("../providers/UsersProviders");
@@ -79287,11 +79304,12 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const CheckoutOrder = () => {
+  const history = (0, _reactRouterDom.useHistory)();
   const user = (0, _react.useContext)(_UsersProviders.UsersContext);
-  const [cart, setCart] = (0, _react.useState)(JSON.parse(localStorage.getItem("cart")) || []);
+  const [cart, setCart] = (0, _react.useState)(JSON.parse(localStorage.getItem('cart')) || []);
 
   const checkoutOrder = async () => {
-    console.log("test");
+    console.log('test');
     const {
       displayName,
       email,
@@ -79310,14 +79328,17 @@ const CheckoutOrder = () => {
     let orders = user.orders || [];
 
     try {
-      const docRef = await _firebase.firestore.collection("orders").add(order);
+      const docRef = await _firebase.firestore.collection('orders').add(order);
       const orderDoc = await docRef.get();
       console.log(orderDoc.data());
-      await _firebase.firestore.collection("users").doc(user.uid).update({
+      await _firebase.firestore.collection('users').doc(user.uid).update({
         orders: [orderDoc.id, ...orders]
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      localStorage.removeItem('cart');
+      history.replace('/');
     }
   };
 
@@ -79330,7 +79351,7 @@ const CheckoutOrder = () => {
 
 var _default = CheckoutOrder;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../firebase":"../src/firebase.js","../providers/UsersProviders":"../src/providers/UsersProviders.js"}],"../src/pages/UpdateUserInfoView.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../firebase":"../src/firebase.js","../providers/UsersProviders":"../src/providers/UsersProviders.js"}],"../src/pages/UpdateUserInfoView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -79419,6 +79440,8 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRouterDom = require("react-router-dom");
+
 var _CheckoutOrder = _interopRequireDefault(require("../components/CheckoutOrder"));
 
 var _UsersProviders = require("../providers/UsersProviders");
@@ -79432,13 +79455,19 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const CheckoutOrderView = () => {
+  const history = (0, _reactRouterDom.useHistory)();
   const user = (0, _react.useContext)(_UsersProviders.UsersContext);
-  return /*#__PURE__*/_react.default.createElement("div", null, user.updatedInfo ? /*#__PURE__*/_react.default.createElement(_CheckoutOrder.default, null) : /*#__PURE__*/_react.default.createElement(_UpdateUserInfoView.default, null));
+  const cart = JSON.parse(localStorage.getItem('cart'));
+
+  const returnToCart = () => history.replace('/cart');
+
+  console.log(cart);
+  return /*#__PURE__*/_react.default.createElement("div", null, user.updatedInfo ? cart.length != 0 ? /*#__PURE__*/_react.default.createElement(_CheckoutOrder.default, null) : returnToCart() : /*#__PURE__*/_react.default.createElement(_UpdateUserInfoView.default, null));
 };
 
 var _default = CheckoutOrderView;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../components/CheckoutOrder":"../src/components/CheckoutOrder.js","../providers/UsersProviders":"../src/providers/UsersProviders.js","./UpdateUserInfoView":"../src/pages/UpdateUserInfoView.js"}],"../src/App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../components/CheckoutOrder":"../src/components/CheckoutOrder.js","../providers/UsersProviders":"../src/providers/UsersProviders.js","./UpdateUserInfoView":"../src/pages/UpdateUserInfoView.js"}],"../src/App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -80280,7 +80309,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59492" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52997" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

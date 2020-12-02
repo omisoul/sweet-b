@@ -1,21 +1,21 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import OrderListItem from "../components/OrderListItem";
-import { firestore } from "../firebase";
-import { UsersListContext } from "../providers/UsersListProvider";
+import React, { useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import OrderListItem from '../components/OrderListItem';
+import { firestore } from '../firebase';
+import { UsersListContext } from '../providers/UsersListProvider';
 
 const UserInfoView = () => {
   const id = location.pathname.replace(
-    "/admin-dashboard/users-list/profile/",
-    ""
+    '/admin-dashboard/users-list/profile/',
+    ''
   );
   const users = useContext(UsersListContext);
 
   const [user, setUser] = useState([]);
-  const [telephoneNumber, setTele] = useState("");
-  const [displayName, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [deliveryLocation, setDeliveryLocation] = useState("");
+  const [telephoneNumber, setTele] = useState('');
+  const [displayName, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [deliveryLocation, setDeliveryLocation] = useState('');
   const [edit, setEdit] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [orderList, setOrderList] = useState([]);
@@ -43,7 +43,7 @@ const UserInfoView = () => {
       displayName,
       telephoneNumber,
     };
-    let docRef = await firestore.collection("users").doc(user.id);
+    let docRef = await firestore.collection('users').doc(user.id);
     docRef.update(updatedUser);
   };
 
@@ -111,9 +111,10 @@ const UserInfoView = () => {
       </button>
 
       <h2>Orders</h2>
-      {orderList.map((order) => (
-        <OrderListItem key={order} user={user} orderList={order} />
-      ))}
+      {user.orders &&
+        orderList.map((order) => (
+          <OrderListItem key={order} user={user} orderList={order} />
+        ))}
     </div>
   );
 };

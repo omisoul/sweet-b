@@ -130,9 +130,16 @@ nav {
   background-size: cover;
   height: 400px;
   width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
 }
-
+.product-image {
+  height: 350px;
+  width: 350px;
+  object-fit: contain;
+}
 .other-product {
   height: 150px;
   width: 150px;
@@ -321,6 +328,10 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  a {
+    align-self: center;
+  }
 }
 .user-list-heading {
   text-align: center;
@@ -346,11 +357,27 @@ a {
   width: 80%;
 }
 
+.edit-user {
+  margin-left: 10px;
+  width: 100%;
+}
+
+.edit-user > h2 {
+  text-align: center;
+}
+.edit-user-form > select {
+  width: 25%;
+}
+
 .edit-user-form {
   display: flex;
   flex-direction: column;
 }
 
 .edit-user-input {
-  background-color: red;
+  background-color: white;
+  border: none;
+  border-bottom: 2px solid black;
+  margin-bottom: 10px;
+  width: 25%;
 }

@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { firestore } from '../firebase';
 import { UsersContext } from '../providers/UsersProviders';
 
 const CheckoutOrder = () => {
+  const history = useHistory();
   const user = useContext(UsersContext);
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem('cart')) || []
@@ -37,6 +39,9 @@ const CheckoutOrder = () => {
         });
     } catch (error) {
       console.log(error);
+    } finally {
+      localStorage.removeItem('cart');
+      history.replace('/');
     }
   };
   return (
