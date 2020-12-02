@@ -1,5 +1,5 @@
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   padding: 0;
   margin: 0;
   font-size: 18px;
@@ -19,7 +19,7 @@ body {
 }
 
 button {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 nav {
@@ -83,7 +83,7 @@ nav .nav-btn {
 .item-con h1 {
   font-size: 36px;
   margin: 5px 0;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-weight: 700;
 }
 
@@ -163,7 +163,23 @@ nav .nav-btn {
   background-size: cover;
   height: 400px;
   width: 400px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   border-radius: 50%;
+}
+
+.product-image {
+  height: 350px;
+  width: 350px;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .other-product {
@@ -325,7 +341,7 @@ a {
 }
 
 .cart-desc-con h3 {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   margin: 5px;
   font-weight: 700;
 }
@@ -500,10 +516,8 @@ a {
   background-color: white;
   border: none;
   border-bottom: 2px solid black;
-  margin-bottom: 30px;
-  width: 50%;
-  font-size: 18px;
-  padding: 5px 10px 5px 20px;
+  margin-bottom: 10px;
+  width: 25%;
 }
 
 .order-items {

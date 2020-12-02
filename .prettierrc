@@ -1,1 +1,5 @@
-{}
+{
+  "disableLanguages": [],
+  "singleQuote": true,
+  "trailingComma": "es5"
+}

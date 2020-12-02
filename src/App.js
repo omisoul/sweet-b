@@ -1,11 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
-import ItemView from "./pages/ItemView";
-import CatalogView from "./pages/CatalogView";
-import CartView from "./pages/CartView";
-import AdminDashboardView from "./pages/AdminDashboardView";
-import CheckoutOrderView from "./pages/CheckoutOrderView";
-
+import React from 'react';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import ItemView from './pages/ItemView';
+import CatalogView from './pages/CatalogView';
+import CartView from './pages/CartView';
+import AdminDashboardView from './pages/AdminDashboardView';
+import CheckoutOrderView from './pages/CheckoutOrderView';
 
 const App = () => {
   return (

@@ -1,35 +1,39 @@
-import React, { useState } from "react";
-import { firestore, storage } from "../firebase";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { firestore, storage } from '../firebase';
 
 const AddItemView = () => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
-  const [flavor, setFlavor] = useState("");
-  const [description, setDescription] = useState("");
-  const [productType, setProductType] = useState("");
+  const [flavor, setFlavor] = useState('');
+  const [description, setDescription] = useState('');
+  const [productType, setProductType] = useState('');
   let imageInput = null;
+  const history = useHistory();
 
   const addProduct = async () => {
-    let product = {
-      name,
-      price,
-      flavor,
-      description,
-      productType,
-    };
-    let docRef = await firestore.collection("products").add(product);
-    console.log(docRef);
-    if (getFile()) {
-      let productDoc = await docRef.get();
-      storage
-        .ref()
-        .child("products")
-        .child(productType)
-        .child(`${productDoc.id}`)
-        .put(getFile())
-        .then((res) => res.ref.getDownloadURL())
-        .then((image) => docRef.update({ image }));
-    }
+    try {
+      let product = {
+        name,
+        price,
+        flavor,
+        description,
+        productType,
+      };
+      let docRef = await firestore.collection('products').add(product);
+      console.log(docRef);
+      if (getFile()) {
+        let productDoc = await docRef.get();
+        storage
+          .ref()
+          .child('products')
+          .child(productType)
+          .child(`${productDoc.id}`)
+          .put(getFile())
+          .then((res) => res.ref.getDownloadURL())
+          .then((image) => docRef.update({ image }));
+      }
+    } catch (error) {}
   };
 
   const getFile = () => {

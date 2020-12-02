@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
-import Navbar from "../components/Navbar";
-import { ProductsContext } from "../providers/ProductsProvider";
+import React, { useState, useEffect, useContext } from 'react';
+import Navbar from '../components/Navbar';
+import { ProductsContext } from '../providers/ProductsProvider';
 
 const ItemView = ({ location }) => {
   const productsList = useContext(ProductsContext);
-  const id = location.pathname.replace("/product/", "");
+  const id = location.pathname.replace('/product/', '');
   const [amount, setAmount] = useState(1);
   const [product, setProduct] = useState(location.state || {});
   const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
+    JSON.parse(localStorage.getItem('cart')) || []
   );
+  const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const ItemView = ({ location }) => {
   }, [productsList]);
 
   const addToCart = (product, amount) => {
-    let oldCart = typeof cart == "string" ? JSON.parse(cart) : cart;
+    let oldCart = typeof cart == 'string' ? JSON.parse(cart) : cart;
     let found = false;
     for (let i of oldCart) {
       if (i.name == product.name) {
@@ -48,6 +49,12 @@ const ItemView = ({ location }) => {
         },
       ]);
     }
+    setAdded(true);
+
+    setTimeout(() => {
+      setAmount(1);
+      setAdded(false);
+    }, 2000);
   };
   return (
     <div>
@@ -63,40 +70,50 @@ const ItemView = ({ location }) => {
           <p>{product.description}</p>
           <h3>Flavours</h3>
           <div className="flavour-con"></div>
-          <div className="flex-con">
-            <div className="amount-con">
+          <div>
+            {added && (
+              <p>
+                Successfully {amount} {product.name}/s added to cart
+              </p>
+            )}
+            <div className="flex-con">
+              <div className="amount-con">
+                <button
+                  className="btn-minus"
+                  onClick={() =>
+                    setAmount(() => {
+                      if (amount > 1) {
+                        return amount - 1;
+                      }
+                      return 1;
+                    })
+                  }
+                >
+                  -
+                </button>
+                <p>{amount}</p>
+                <button
+                  className="btn-plus"
+                  onClick={() => setAmount(amount + 1)}
+                >
+                  +
+                </button>
+              </div>
               <button
-                className="btn-minus"
-                onClick={() =>
-                  setAmount(() => {
-                    if (amount > 1) {
-                      return amount - 1;
-                    }
-                    return 1;
-                  })
-                }
+                className="btn"
+                onClick={() => {
+                  addToCart(product, amount);
+                }}
               >
-                -
-              </button>
-              <p>{amount}</p>
-              <button
-                className="btn-plus"
-                onClick={() => setAmount(amount + 1)}
-              >
-                +
+                <span className="btn-text">Add to Cart</span>
               </button>
             </div>
-            <button
-              className="btn"
-              onClick={() => {
-                addToCart(product, amount);
-              }}
-            >
-              <span className="btn-text">Add to Cart</span>
-            </button>
           </div>
         </div>
-        <div className="product-con"></div>
+
+        <div className="product-con">
+          <img src={product.image} alt="" className="product-image" />
+        </div>
         <div className="other-products-con">
           <div className="other-product bg1"></div>
           <div className="other-product bg2"></div>

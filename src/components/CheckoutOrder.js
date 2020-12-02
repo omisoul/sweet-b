@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { addToArray, firestore } from "../firebase";
-import { UsersContext } from "../providers/UsersProviders";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useEffect, useState } from 'react';
+import { addToArray, firestore } from '../firebase';
+import { UsersContext } from '../providers/UsersProviders';
+import { useHistory } from 'react-router-dom';
 
 const CheckoutOrder = () => {
   const history = useHistory();
@@ -14,10 +14,10 @@ const CheckoutOrder = () => {
   }, [user]);
 
   const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
+    JSON.parse(localStorage.getItem('cart')) || []
   );
   const checkoutOrder = async () => {
-    console.log("test");
+    console.log('test');
     const {
       displayName,
       email,
@@ -34,21 +34,24 @@ const CheckoutOrder = () => {
       deliveryLocation,
       cart,
       uid,
-      status: "Pending",
+      status: 'Pending',
     };
     ////////////////////////////let orders = user.orders || [];
     try {
-      const docRef = await firestore.collection("orders").add(order);
+      const docRef = await firestore.collection('orders').add(order);
       const orderDoc = await docRef.get();
       console.log(orderDoc.data());
       await firestore
-        .collection("users")
+        .collection('users')
         .doc(user.uid)
         .update({
           orders: addToArray(orderDoc.id),
         });
     } catch (error) {
       console.log(error);
+    } finally {
+      localStorage.removeItem('cart');
+      history.replace('/');
     }
     // } finally {
     //   history.push("/");
