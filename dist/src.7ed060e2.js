@@ -79187,11 +79187,11 @@ const UserInfoView = () => {
       setIsHidden(!isHidden);
       updateUser();
     }
-  }, "Update"), /*#__PURE__*/_react.default.createElement("h2", null, "Orders"), orderList.map(order => user.orders ? /*#__PURE__*/_react.default.createElement(_OrderListItem.default, {
+  }, "Update"), /*#__PURE__*/_react.default.createElement("h2", null, "Orders"), orderList.map(order => /*#__PURE__*/_react.default.createElement(_OrderListItem.default, {
     key: order,
     user: user,
     orderList: order
-  }) : ""));
+  })));
 };
 
 var _default = UserInfoView;
