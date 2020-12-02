@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { firestore } from "../firebase";
 import { UsersContext } from "../providers/UsersProviders";
 
+// Collects user information and updates the user
 const UpdateUserInfoView = () => {
   const user = useContext(UsersContext);
   const history = useHistory();
@@ -47,7 +48,7 @@ const UpdateUserInfoView = () => {
           type="tel"
           value={telephoneNumber}
           required
-          pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+          pattern="[0-9]{3}-[0-9]{4}-[0-9]{3}"
           onChange={(e) => setTelephoneNumber(e.target.value)}
         />
         <select

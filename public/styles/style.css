@@ -454,4 +454,30 @@ a {
   border: 1px solid black;
   width: 80%;
 }
+
+.edit-user {
+  margin-left: 10px;
+  width: 100%;
+}
+
+.edit-user > h2 {
+  text-align: center;
+}
+.edit-user-form > select {
+  width: 25%;
+}
+
+.edit-user-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-user-input {
+  background-color: white;
+  border: none;
+  border-bottom: 2px solid black;
+  margin-bottom: 10px;
+  width: 25%;
+}
+
 /*# sourceMappingURL=style.css.map */
