@@ -111,9 +111,10 @@ const UserInfoView = () => {
       </button>
 
       <h2>Orders</h2>
-      {orderList.map((order) => (
-        <OrderListItem key={order} user={user} orderList={order} />
-      ))}
+      {user.orders &&
+        orderList.map((order) => (
+          <OrderListItem key={order} user={user} orderList={order} />
+        ))}
     </div>
   );
 };

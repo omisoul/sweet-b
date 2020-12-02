@@ -1,9 +1,18 @@
-import React, { useContext, useState } from "react";
-import { firestore } from "../firebase";
+import React, { useContext, useEffect, useState } from "react";
+import { addToArray, firestore } from "../firebase";
 import { UsersContext } from "../providers/UsersProviders";
+import { useHistory } from "react-router-dom";
 
 const CheckoutOrder = () => {
+  const history = useHistory();
   const user = useContext(UsersContext);
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    setOrders(user.orders);
+    console.log(user);
+  }, [user]);
+
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem("cart")) || []
   );
@@ -15,6 +24,7 @@ const CheckoutOrder = () => {
       telephoneNumber,
       address,
       deliveryLocation,
+      uid,
     } = user;
     let order = {
       displayName,
@@ -23,8 +33,10 @@ const CheckoutOrder = () => {
       address,
       deliveryLocation,
       cart,
+      uid,
+      status: "Pending",
     };
-    let orders = user.orders || [];
+    ////////////////////////////let orders = user.orders || [];
     try {
       const docRef = await firestore.collection("orders").add(order);
       const orderDoc = await docRef.get();
@@ -33,11 +45,14 @@ const CheckoutOrder = () => {
         .collection("users")
         .doc(user.uid)
         .update({
-          orders: [orderDoc.id, ...orders],
+          orders: addToArray(orderDoc.id),
         });
     } catch (error) {
       console.log(error);
     }
+    // } finally {
+    //   history.push("/");
+    // }
   };
   return (
     <div>

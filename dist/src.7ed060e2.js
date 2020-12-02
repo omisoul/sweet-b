@@ -77876,7 +77876,7 @@ require("@firebase/storage");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = exports.getTimestamp = exports.getUserDoc = exports.createUserProfileDoc = exports.signOut = exports.signInWithGoogle = exports.provider = exports.storage = exports.auth = exports.firestore = void 0;
+exports.default = exports.addToArray = exports.getTimestamp = exports.getUserDoc = exports.createUserProfileDoc = exports.signOut = exports.signInWithGoogle = exports.provider = exports.storage = exports.auth = exports.firestore = void 0;
 
 var _app = _interopRequireDefault(require("firebase/app"));
 
@@ -77980,6 +77980,12 @@ const getTimestamp = date => {
 };
 
 exports.getTimestamp = getTimestamp;
+
+const addToArray = val => {
+  return _app.default.firestore.FieldValue.arrayUnion(val);
+};
+
+exports.addToArray = addToArray;
 var _default = _app.default;
 exports.default = _default;
 },{"firebase/app":"../node_modules/firebase/app/dist/index.esm.js","firebase/firestore":"../node_modules/firebase/firestore/dist/index.esm.js","firebase/auth":"../node_modules/firebase/auth/dist/index.esm.js","firebase/analytics":"../node_modules/firebase/analytics/dist/index.esm.js","firebase/storage":"../node_modules/firebase/storage/dist/index.esm.js"}],"../src/utilities.js":[function(require,module,exports) {
@@ -79187,7 +79193,7 @@ const UserInfoView = () => {
       setIsHidden(!isHidden);
       updateUser();
     }
-  }, "Update"), /*#__PURE__*/_react.default.createElement("h2", null, "Orders"), orderList.map(order => /*#__PURE__*/_react.default.createElement(_OrderListItem.default, {
+  }, "Update"), /*#__PURE__*/_react.default.createElement("h2", null, "Orders"), user.orders && orderList.map(order => /*#__PURE__*/_react.default.createElement(_OrderListItem.default, {
     key: order,
     user: user,
     orderList: order
@@ -79196,7 +79202,157 @@ const UserInfoView = () => {
 
 var _default = UserInfoView;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../components/OrderListItem":"../src/components/OrderListItem.js","../firebase":"../src/firebase.js","../providers/UsersListProvider":"../src/providers/UsersListProvider.js"}],"../src/components/AdminDashboard.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../components/OrderListItem":"../src/components/OrderListItem.js","../firebase":"../src/firebase.js","../providers/UsersListProvider":"../src/providers/UsersListProvider.js"}],"../src/components/OrderList.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _firebase = require("../firebase");
+
+var _xBtn = _interopRequireDefault(require("../res/x-btn.svg"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _UsersListProvider = require("../providers/UsersListProvider");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const OrderList = ({
+  order
+}) => {
+  const users = (0, _react.useContext)(_UsersListProvider.UsersListContext);
+  const [user, setUser] = (0, _react.useState)([]);
+  const [ords, setOrds] = (0, _react.useState)([]);
+  (0, _react.useEffect)(() => {
+    for (let i of users) {
+      if (order.uid === i.id) {
+        setUser(i);
+        setOrds(i.orders);
+      }
+    }
+  }, [users]);
+
+  const handleDelete = async () => {
+    setOrds(ords.splice(0, 1));
+    await _firebase.firestore.collection("users").doc(user.id).update({
+      orders: ords
+    });
+    await _firebase.firestore.collection("orders").doc(order.id).delete();
+  };
+
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "order-list"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "order-items"
+  }, /*#__PURE__*/_react.default.createElement("p", null, order.displayName), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+    to: {
+      pathname: `/admin-dashboard/order/${order.id}`
+    },
+    className: "username"
+  }, order.id), /*#__PURE__*/_react.default.createElement("input", {
+    type: "image",
+    src: _xBtn.default,
+    alt: "remove",
+    onClick: () => {
+      handleDelete();
+    }
+  })));
+};
+
+var _default = OrderList;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../firebase":"../src/firebase.js","../res/x-btn.svg":"../src/res/x-btn.svg","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../providers/UsersListProvider":"../src/providers/UsersListProvider.js"}],"../src/providers/OrdersProvider.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.OrdersContext = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _firebase = require("../firebase");
+
+var _utilities = require("../utilities");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const OrdersContext = (0, _react.createContext)();
+exports.OrdersContext = OrdersContext;
+
+const OrdersProvider = props => {
+  const [orders, setOrders] = (0, _react.useState)([]);
+  let unsubscribe = null;
+  (0, _react.useEffect)(() => {
+    async function fetchOrders() {
+      unsubscribe = _firebase.firestore.collection("orders").onSnapshot(snapshot => {
+        const order = snapshot.docs.map(_utilities.collectIdAndDocs);
+        setOrders(order);
+        console.log(order);
+        console.log("hello");
+      });
+    }
+
+    fetchOrders();
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  return /*#__PURE__*/_react.default.createElement(OrdersContext.Provider, {
+    value: orders
+  }, props.children);
+};
+
+var _default = OrdersProvider;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../firebase":"../src/firebase.js","../utilities":"../src/utilities.js"}],"../src/pages/OrdersView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _OrderList = _interopRequireDefault(require("../components/OrderList"));
+
+var _OrdersProvider = require("../providers/OrdersProvider");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const OrdersView = () => {
+  const orders = (0, _react.useContext)(_OrdersProvider.OrdersContext);
+  console.log(orders);
+  console.log("hello");
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "user-list-page"
+  }, /*#__PURE__*/_react.default.createElement("h2", {
+    className: "user-list-heading"
+  }, "Orders"), orders.map(order => order ? /*#__PURE__*/_react.default.createElement(_OrderList.default, {
+    key: order.id,
+    order: order
+  }) : ""));
+};
+
+var _default = OrdersView;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../components/OrderList":"../src/components/OrderList.js","../providers/OrdersProvider":"../src/providers/OrdersProvider.js"}],"../src/components/AdminDashboard.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -79222,6 +79378,8 @@ var _UsersListView = _interopRequireDefault(require("../pages/UsersListView"));
 
 var _UserInfoView = _interopRequireDefault(require("../pages/UserInfoView"));
 
+var _OrdersView = _interopRequireDefault(require("../pages/OrdersView"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -79236,12 +79394,12 @@ const AdminDashboard = () => {
     className: "admin-dashboard"
   }, /*#__PURE__*/_react.default.createElement(_AdminSidebar.default, null), location.pathname == "/admin-dashboard" && /*#__PURE__*/_react.default.createElement(_DashboardView.default, null), location.pathname == "/admin-dashboard/add-product" && /*#__PURE__*/_react.default.createElement(_AddItemView.default, null), location.pathname == "/admin-dashboard/view-products" && /*#__PURE__*/_react.default.createElement(_ProductView.default, {
     setProductID: setProductID
-  }), location.pathname.includes("/admin-dashboard/update-product") && /*#__PURE__*/_react.default.createElement(_UpdateItemView.default, null), location.pathname.includes("/admin-dashboard/users-list/profile") && /*#__PURE__*/_react.default.createElement(_UserInfoView.default, null), location.pathname == "/admin-dashboard/users-list" && /*#__PURE__*/_react.default.createElement(_UsersListView.default, null));
+  }), location.pathname.includes("/admin-dashboard/update-product") && /*#__PURE__*/_react.default.createElement(_UpdateItemView.default, null), location.pathname.includes("/admin-dashboard/users-list/profile") && /*#__PURE__*/_react.default.createElement(_UserInfoView.default, null), location.pathname == "/admin-dashboard/users-list" && /*#__PURE__*/_react.default.createElement(_UsersListView.default, null), location.pathname == "/admin-dashboard/view-orders" && /*#__PURE__*/_react.default.createElement(_OrdersView.default, null));
 };
 
 var _default = AdminDashboard;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./AdminSidebar":"../src/components/AdminSidebar.js","../pages/AddItemView":"../src/pages/AddItemView.js","../pages/ProductView":"../src/pages/ProductView.js","../pages/UpdateItemView":"../src/pages/UpdateItemView.js","../pages/DashboardView":"../src/pages/DashboardView.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../pages/UsersListView":"../src/pages/UsersListView.js","../pages/UserInfoView":"../src/pages/UserInfoView.js"}],"../src/pages/AdminDashboardView.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./AdminSidebar":"../src/components/AdminSidebar.js","../pages/AddItemView":"../src/pages/AddItemView.js","../pages/ProductView":"../src/pages/ProductView.js","../pages/UpdateItemView":"../src/pages/UpdateItemView.js","../pages/DashboardView":"../src/pages/DashboardView.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../pages/UsersListView":"../src/pages/UsersListView.js","../pages/UserInfoView":"../src/pages/UserInfoView.js","../pages/OrdersView":"../src/pages/OrdersView.js"}],"../src/pages/AdminDashboardView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -79282,12 +79440,20 @@ var _firebase = require("../firebase");
 
 var _UsersProviders = require("../providers/UsersProviders");
 
+var _reactRouterDom = require("react-router-dom");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const CheckoutOrder = () => {
+  const history = (0, _reactRouterDom.useHistory)();
   const user = (0, _react.useContext)(_UsersProviders.UsersContext);
+  const [orders, setOrders] = (0, _react.useState)([]);
+  (0, _react.useEffect)(() => {
+    setOrders(user.orders);
+    console.log(user);
+  }, [user]);
   const [cart, setCart] = (0, _react.useState)(JSON.parse(localStorage.getItem("cart")) || []);
 
   const checkoutOrder = async () => {
@@ -79297,7 +79463,8 @@ const CheckoutOrder = () => {
       email,
       telephoneNumber,
       address,
-      deliveryLocation
+      deliveryLocation,
+      uid
     } = user;
     let order = {
       displayName,
@@ -79305,20 +79472,24 @@ const CheckoutOrder = () => {
       telephoneNumber,
       address,
       deliveryLocation,
-      cart
-    };
-    let orders = user.orders || [];
+      cart,
+      uid,
+      status: "Pending"
+    }; ////////////////////////////let orders = user.orders || [];
 
     try {
       const docRef = await _firebase.firestore.collection("orders").add(order);
       const orderDoc = await docRef.get();
       console.log(orderDoc.data());
       await _firebase.firestore.collection("users").doc(user.uid).update({
-        orders: [orderDoc.id, ...orders]
+        orders: (0, _firebase.addToArray)(orderDoc.id)
       });
     } catch (error) {
       console.log(error);
-    }
+    } // } finally {
+    //   history.push("/");
+    // }
+
   };
 
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
@@ -79330,7 +79501,7 @@ const CheckoutOrder = () => {
 
 var _default = CheckoutOrder;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../firebase":"../src/firebase.js","../providers/UsersProviders":"../src/providers/UsersProviders.js"}],"../src/pages/UpdateUserInfoView.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../firebase":"../src/firebase.js","../providers/UsersProviders":"../src/providers/UsersProviders.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../src/pages/UpdateUserInfoView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -80249,10 +80420,12 @@ var _UsersProviders = _interopRequireDefault(require("./providers/UsersProviders
 
 require("regenerator-runtime/runtime");
 
+var _OrdersProvider = _interopRequireDefault(require("./providers/OrdersProvider"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom.default.render( /*#__PURE__*/_react.default.createElement(_react.default.StrictMode, null, /*#__PURE__*/_react.default.createElement(_UsersListProvider.default, null, /*#__PURE__*/_react.default.createElement(_UsersProviders.default, null, /*#__PURE__*/_react.default.createElement(_ProductsProvider.default, null, /*#__PURE__*/_react.default.createElement(_App.default, null))))), document.getElementById("root"));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./App":"../src/App.js","./providers/ProductsProvider":"../src/providers/ProductsProvider.js","./providers/UsersListProvider":"../src/providers/UsersListProvider.js","./providers/UsersProviders":"../src/providers/UsersProviders.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+_reactDom.default.render( /*#__PURE__*/_react.default.createElement(_react.default.StrictMode, null, /*#__PURE__*/_react.default.createElement(_UsersListProvider.default, null, /*#__PURE__*/_react.default.createElement(_UsersProviders.default, null, /*#__PURE__*/_react.default.createElement(_ProductsProvider.default, null, /*#__PURE__*/_react.default.createElement(_OrdersProvider.default, null, /*#__PURE__*/_react.default.createElement(_App.default, null)))))), document.getElementById("root"));
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./App":"../src/App.js","./providers/ProductsProvider":"../src/providers/ProductsProvider.js","./providers/UsersListProvider":"../src/providers/UsersListProvider.js","./providers/UsersProviders":"../src/providers/UsersProviders.js","regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","./providers/OrdersProvider":"../src/providers/OrdersProvider.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -80280,7 +80453,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59492" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53511" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -68,4 +68,7 @@ export const getUserDoc = async (uid) => {
 export const getTimestamp = (date) => {
   return firebase.firestore.Timestamp.fromDate(date);
 };
+export const addToArray = (val) => {
+  return firebase.firestore.FieldValue.arrayUnion(val);
+};
 export default firebase;
