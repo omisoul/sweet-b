@@ -5,7 +5,7 @@ $bg-color: #f8f5ff;
 $primary-color: #9377e2;
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   padding: 0;
   margin: 0;
   font-size: 18px;
@@ -17,7 +17,7 @@ body {
   flex-direction: column;
 }
 button {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 nav {
   display: flex;
@@ -67,7 +67,7 @@ nav {
   h1 {
     font-size: 36px;
     margin: 5px 0;
-    font-family: "Nunito", sans-serif;
+    font-family: 'Nunito', sans-serif;
     font-weight: 700;
   }
 }
@@ -124,7 +124,7 @@ nav {
 }
 
 .product-con {
-  background-image: url("../styles/res/blue-spiral.png");
+  background-image: url('../styles/res/blue-spiral.png');
   background-color: #9377e2;
   background-position: center;
   background-size: cover;
@@ -143,15 +143,15 @@ nav {
 }
 
 .bg1 {
-  background-image: url("../styles/res/purple-spiral.png");
+  background-image: url('../styles/res/purple-spiral.png');
   background-color: #9377e2;
 }
 .bg2 {
-  background-image: url("../styles/res/pink-spiral.png");
+  background-image: url('../styles/res/pink-spiral.png');
   background-color: #9377e2;
 }
 .bg3 {
-  background-image: url("../styles/res/yellow-spiral.png");
+  background-image: url('../styles/res/yellow-spiral.png');
   background-color: #9377e2;
 }
 a {
@@ -246,7 +246,7 @@ a {
 .cart-desc-con {
   padding: 0 30px;
   h3 {
-    font-family: "Nunito", sans-serif;
+    font-family: 'Nunito', sans-serif;
     margin: 5px;
     font-weight: 700;
   }

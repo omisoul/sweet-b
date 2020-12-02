@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
-import Navbar from "../components/Navbar";
-import { ProductsContext } from "../providers/ProductsProvider";
+import React, { useState, useEffect, useContext } from 'react';
+import Navbar from '../components/Navbar';
+import { ProductsContext } from '../providers/ProductsProvider';
 
 const ItemView = ({ location }) => {
   const productsList = useContext(ProductsContext);
-  const id = location.pathname.replace("/product/", "");
+  const id = location.pathname.replace('/product/', '');
   const [amount, setAmount] = useState(1);
   const [product, setProduct] = useState(location.state || {});
   const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
+    JSON.parse(localStorage.getItem('cart')) || []
   );
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const ItemView = ({ location }) => {
   }, [productsList]);
 
   const addToCart = (product, amount) => {
-    let oldCart = typeof cart == "string" ? JSON.parse(cart) : cart;
+    let oldCart = typeof cart == 'string' ? JSON.parse(cart) : cart;
     let found = false;
     for (let i of oldCart) {
       if (i.name == product.name) {

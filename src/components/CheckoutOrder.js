@@ -1,14 +1,14 @@
-import React, { useContext, useState } from "react";
-import { firestore } from "../firebase";
-import { UsersContext } from "../providers/UsersProviders";
+import React, { useContext, useState } from 'react';
+import { firestore } from '../firebase';
+import { UsersContext } from '../providers/UsersProviders';
 
 const CheckoutOrder = () => {
   const user = useContext(UsersContext);
   const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
+    JSON.parse(localStorage.getItem('cart')) || []
   );
   const checkoutOrder = async () => {
-    console.log("test");
+    console.log('test');
     const {
       displayName,
       email,
@@ -26,11 +26,11 @@ const CheckoutOrder = () => {
     };
     let orders = user.orders || [];
     try {
-      const docRef = await firestore.collection("orders").add(order);
+      const docRef = await firestore.collection('orders').add(order);
       const orderDoc = await docRef.get();
       console.log(orderDoc.data());
       await firestore
-        .collection("users")
+        .collection('users')
         .doc(user.uid)
         .update({
           orders: [orderDoc.id, ...orders],

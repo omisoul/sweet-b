@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import UsersListItem from "../components/UsersListItem";
-import { UsersListContext } from "../providers/UsersListProvider";
+import React, { useContext } from 'react';
+import UsersListItem from '../components/UsersListItem';
+import { UsersListContext } from '../providers/UsersListProvider';
 
 const DashboardView = () => {
   return (

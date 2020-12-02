@@ -1,18 +1,18 @@
-import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
-import "firebase/analytics";
-import "firebase/storage";
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+import 'firebase/analytics';
+import 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBDFN7Xe1z0MhGVfYaKw5JZoNc6a_Z7D8Q",
-  authDomain: "sweet-bs.firebaseapp.com",
-  databaseURL: "https://sweet-bs.firebaseio.com",
-  projectId: "sweet-bs",
-  storageBucket: "sweet-bs.appspot.com",
-  messagingSenderId: "540013480402",
-  appId: "1:540013480402:web:29a0198a514bd4182da00b",
-  measurementId: "G-0JD0VJXZCF",
+  apiKey: 'AIzaSyBDFN7Xe1z0MhGVfYaKw5JZoNc6a_Z7D8Q',
+  authDomain: 'sweet-bs.firebaseapp.com',
+  databaseURL: 'https://sweet-bs.firebaseio.com',
+  projectId: 'sweet-bs',
+  storageBucket: 'sweet-bs.appspot.com',
+  messagingSenderId: '540013480402',
+  appId: '1:540013480402:web:29a0198a514bd4182da00b',
+  measurementId: 'G-0JD0VJXZCF',
 };
 
 // Initialize Firebase
@@ -37,7 +37,7 @@ export const createUserProfileDoc = async (user, additionalData) => {
   if (!snapshot.exists) {
     const { displayName, email, photoURL } = user;
     const createdAt = new Date();
-    const role = "customer";
+    const role = 'customer';
     try {
       await userRef.set({
         displayName,
@@ -47,7 +47,7 @@ export const createUserProfileDoc = async (user, additionalData) => {
         ...additionalData,
       });
     } catch (error) {
-      console.error("Error creating user", error.message);
+      console.error('Error creating user', error.message);
     }
   }
 
@@ -58,11 +58,11 @@ export const getUserDoc = async (uid) => {
   if (!uid) return null;
 
   try {
-    const userDoc = await firestore.collection("users").doc(uid).get();
+    const userDoc = await firestore.collection('users').doc(uid).get();
 
     return { uid, ...userDoc.data() };
   } catch (error) {
-    console.error("Error fetching the user", error.message);
+    console.error('Error fetching the user', error.message);
   }
 };
 export const getTimestamp = (date) => {
