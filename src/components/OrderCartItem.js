@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const OrderCartItem = (item) => {
+const OrderCartItem = ({ item }) => {
   return (
     <div className="order-view-cart">
       <h4>{item.name}</h4>
