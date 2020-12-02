@@ -337,6 +337,7 @@ a {
 .usernames {
   display: flex;
   width: fit-content;
+  align-items: center;
 
   a {
     color: #9377e2;
@@ -357,7 +358,8 @@ a {
 
 .edit-user {
   margin-left: 10px;
-  width: 100%;
+  width: 75%;
+  overflow-y: auto;
 }
 
 .edit-user > h1 {
@@ -365,7 +367,10 @@ a {
 }
 
 .edit-user-form > select {
-  width: 25%;
+  width: 50%;
+  font-size: 18px;
+  padding: 5px 10px 5px 20px;
+  margin-bottom: 30px;
 }
 
 .edit-user-form {
@@ -382,8 +387,10 @@ a {
   background-color: white;
   border: none;
   border-bottom: 2px solid black;
-  margin-bottom: 10px;
-  width: 25%;
+  margin-bottom: 30px;
+  width: 50%;
+  font-size: 18px;
+  padding: 5px 10px 5px 20px;
 }
 
 .order-items {
