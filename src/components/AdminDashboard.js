@@ -6,6 +6,7 @@ import UpdateItemView from "../pages/UpdateItemView";
 import DashboardView from "../pages/DashboardView";
 import { useLocation } from "react-router-dom";
 import UsersListView from "../pages/UsersListView";
+import UserInfoView from "../pages/UserInfoView";
 
 const AdminDashboard = () => {
   const location = useLocation();
@@ -21,6 +22,9 @@ const AdminDashboard = () => {
       )}
       {location.pathname.includes("/admin-dashboard/update-product") && (
         <UpdateItemView />
+      )}
+      {location.pathname.includes("/admin-dashboard/users-list/profile") && (
+        <UserInfoView />
       )}
       {location.pathname == "/admin-dashboard/users-list" && <UsersListView />}
     </div>

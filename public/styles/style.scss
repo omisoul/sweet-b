@@ -345,3 +345,12 @@ a {
   border: 1px solid black;
   width: 80%;
 }
+
+.edit-user-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-user-input {
+  background-color: red;
+}
