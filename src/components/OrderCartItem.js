@@ -4,8 +4,8 @@ const OrderCartItem = ({ item }) => {
   return (
     <div className="order-view-cart">
       <h4>{item.name}</h4>
-      <p>{item.amunt}</p>
-      <p>{item.price}</p>
+      <p>{item.amount}</p>
+      <p>{item.price * item.amount}</p>
     </div>
   );
 };
