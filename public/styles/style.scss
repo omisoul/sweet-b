@@ -331,6 +331,7 @@ a {
 
   a {
     align-self: center;
+    color: #9377e2;
   }
 }
 .user-list-heading {
@@ -343,6 +344,10 @@ a {
 .usernames {
   display: flex;
   width: fit-content;
+
+  a {
+    color: #9377e2;
+  }
 }
 .username {
   width: 15em;
@@ -362,15 +367,21 @@ a {
   width: 100%;
 }
 
-.edit-user > h2 {
+.edit-user > h1 {
   text-align: center;
 }
+
 .edit-user-form > select {
   width: 25%;
 }
 
 .edit-user-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
 }
 
@@ -380,4 +391,22 @@ a {
   border-bottom: 2px solid black;
   margin-bottom: 10px;
   width: 25%;
+<<<<<<< HEAD
+=======
+}
+
+.order-items {
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr 1fr;
+  justify-content: center;
+  align-items: center;
+
+  a {
+    color: #9377e2;
+  }
+}
+
+.order-status {
+  color: rgb(63, 55, 55);
+>>>>>>> e1be4698151c3929a8af7360978efbcd3893fbaf
 }

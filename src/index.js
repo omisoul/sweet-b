@@ -4,13 +4,16 @@ import App from "./App";
 import ProductsProvider from "./providers/ProductsProvider";
 import UsersListProvider from "./providers/UsersListProvider";
 import UsersProviders from "./providers/UsersProviders";
-import 'regenerator-runtime/runtime'
+import "regenerator-runtime/runtime";
+import OrdersProvider from "./providers/OrdersProvider";
 ReactDOM.render(
   <React.StrictMode>
     <UsersListProvider>
       <UsersProviders>
         <ProductsProvider>
-          <App />
+          <OrdersProvider>
+            <App />
+          </OrdersProvider>
         </ProductsProvider>
       </UsersProviders>
     </UsersListProvider>

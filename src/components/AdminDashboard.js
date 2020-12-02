@@ -7,6 +7,7 @@ import DashboardView from "../pages/DashboardView";
 import { useLocation } from "react-router-dom";
 import UsersListView from "../pages/UsersListView";
 import UserInfoView from "../pages/UserInfoView";
+import OrdersView from "../pages/OrdersView";
 
 const AdminDashboard = () => {
   const location = useLocation();
@@ -27,6 +28,7 @@ const AdminDashboard = () => {
         <UserInfoView />
       )}
       {location.pathname == "/admin-dashboard/users-list" && <UsersListView />}
+      {location.pathname == "/admin-dashboard/view-orders" && <OrdersView />}
     </div>
   );
 };

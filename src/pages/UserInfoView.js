@@ -51,6 +51,7 @@ const UserInfoView = () => {
 
   return (
     <div className="edit-user">
+      <h1>User Information</h1>
       <h2>Overview</h2>
       <form className="edit-user-form">
         <input disabled={true} className="edit-user-input" value={user.email} />
@@ -89,17 +90,17 @@ const UserInfoView = () => {
       </form>
 
       <button
-        className="edit-user-btn"
+        className="btn"
         hidden={isHidden}
         onClick={() => {
           setEdit(true);
           setIsHidden(!isHidden);
         }}
       >
-        Edit Info
+        <span className="btn-text">Edit Info</span>
       </button>
       <button
-        className="edit-user-btn"
+        className="btn"
         hidden={!isHidden}
         onClick={() => {
           setEdit(false);
@@ -107,7 +108,7 @@ const UserInfoView = () => {
           updateUser();
         }}
       >
-        Update
+        <span className="btn-text">Update</span>
       </button>
 
       <h2>Orders</h2>
