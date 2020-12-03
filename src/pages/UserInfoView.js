@@ -116,6 +116,7 @@ const UserInfoView = () => {
       </button>
 
       <h2>Orders</h2>
+      {console.log(user.orders)}
       {user.orders &&
         orderList.map((order) => (
           <OrderListItem key={order} user={user} orderList={order} />
