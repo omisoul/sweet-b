@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UsersListContext } from '../providers/UsersListProvider';
 import { ProductsContext } from '../providers/ProductsProvider';
 import { OrdersContext } from '../providers/OrdersProvider';
+import dashboard from '../res/dashboard.gif';
 
 const DashboardView = () => {
   const users = useContext(UsersListContext);
@@ -55,37 +56,41 @@ const DashboardView = () => {
 
   return (
     <div className="user-list-page">
-      <h1>Administrative Dashboard</h1>
+      <h1 className="dashboard-title">Administrative Dashboard</h1>
 
-      <div className="dashboard-items">
-        <div className="dashboard-card">
-          <h4>Users</h4>
-          <p>{numUsers}</p>
-        </div>
+      <div className="flex-con">
+        <img src={dashboard} alt="dashboard" />
 
-        <div className="dashboard-card">
-          <h4>Products</h4>
-          <p>{numProducts}</p>
-        </div>
+        <div className="dashboard-items">
+          <div className="dashboard-card">
+            <h4>Users</h4>
+            <p>{numUsers}</p>
+          </div>
 
-        <div className="dashboard-card">
-          <h4>Orders</h4>
-          <p>{numOrders}</p>
-        </div>
+          <div className="dashboard-card">
+            <h4>Products</h4>
+            <p>{numProducts}</p>
+          </div>
 
-        <div className="dashboard-card">
-          <h4>Pending Orders</h4>
-          <p>{numPending}</p>
-        </div>
+          <div className="dashboard-card">
+            <h4>Orders</h4>
+            <p>{numOrders}</p>
+          </div>
 
-        <div className="dashboard-card">
-          <h4>Delivered Orders</h4>
-          <p>{numDelivered}</p>
-        </div>
+          <div className="dashboard-card">
+            <h4>Pending Orders</h4>
+            <p>{numPending}</p>
+          </div>
 
-        <div className="dashboard-card">
-          <h4>Canceled Orders</h4>
-          <p>{numCanceled}</p>
+          <div className="dashboard-card">
+            <h4>Delivered Orders</h4>
+            <p>{numDelivered}</p>
+          </div>
+
+          <div className="dashboard-card">
+            <h4>Canceled Orders</h4>
+            <p>{numCanceled}</p>
+          </div>
         </div>
       </div>
     </div>
