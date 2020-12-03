@@ -69,7 +69,7 @@ const ItemView = ({ location }) => {
           </div>
           <p>{product.description}</p>
           <h3>Flavours</h3>
-          <div className="flavour-con"></div>
+          <div className="flavour-con">{product.flavor}</div>
           <div>
             {added && (
               <p>

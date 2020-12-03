@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { addToArray, firestore } from '../firebase';
 import { UsersContext } from '../providers/UsersProviders';
 import { useHistory } from 'react-router-dom';
+import Navbar from './Navbar';
+import selfcheckout from '../res/selfcheckout.gif';
+import OrderSummaryItem from '../components/OrderSummaryItem';
 
 const CheckoutOrder = () => {
   const history = useHistory();
@@ -16,6 +19,15 @@ const CheckoutOrder = () => {
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem('cart')) || []
   );
+  const getTotal = () => {
+    let total = 0;
+    for (let i of cart) {
+      total += i.amount * i.price;
+      console.log(total);
+    }
+    return total;
+  };
+
   const checkoutOrder = async () => {
     console.log('test');
     const {
@@ -59,13 +71,42 @@ const CheckoutOrder = () => {
   };
   return (
     <div>
-      <button
-        onClick={() => {
-          checkoutOrder();
-        }}
-      >
-        Checkout Order
-      </button>
+      <Navbar />
+      <div className="checkout-con">
+        <div className="checkout-gif-con">
+          <img src={selfcheckout} alt="" />
+        </div>
+        <div>
+          <h2>Check your order</h2>
+          <p>Let's take one final look at your order before you go.</p>
+          <h4>Order Summary</h4>
+          <div className="checkout-summary">
+            <div className="cart-summary-items">
+              {cart.length === 0 ? (
+                <p>The cart is empty</p>
+              ) : (
+                cart.map((item) => (
+                  <OrderSummaryItem key={item.name} item={item} />
+                ))
+              )}
+            </div>
+          </div>
+          {cart.length !== 0 && (
+            <div className="order-summary-item">
+              <p>Total:</p>
+              <p>${getTotal()}</p>
+            </div>
+          )}
+          <button
+            className="btn"
+            onClick={() => {
+              checkoutOrder();
+            }}
+          >
+            Checkout Order
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

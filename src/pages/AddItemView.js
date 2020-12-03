@@ -63,7 +63,12 @@ const AddItemView = () => {
           type="number"
           value={price}
           onChange={(e) => {
-            setPrice(e.target.value);
+            setPrice(() => {
+              if (e.target.value < 0) {
+                return 0;
+              }
+              return e.target.value;
+            });
           }}
           required
         />

@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
-import { ProductsContext } from "../providers/ProductsProvider";
-import { firestore } from "../firebase";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, useContext } from 'react';
+import { ProductsContext } from '../providers/ProductsProvider';
+import { firestore } from '../firebase';
+import { useLocation } from 'react-router-dom';
 
 const UpdateItemView = () => {
   const productsList = useContext(ProductsContext);
   const location = useLocation();
   const pathId = location.pathname.replace(
-    "/admin-dashboard/update-product/",
-    ""
+    '/admin-dashboard/update-product/',
+    ''
   );
   const [product, setProduct] = useState({});
 
@@ -33,12 +33,12 @@ const UpdateItemView = () => {
     setDescription(product.description);
     setProductType(product.productType);
   }, [product]);
-  const [id, setId] = useState(" ");
-  const [name, setName] = useState(" ");
+  const [id, setId] = useState(' ');
+  const [name, setName] = useState(' ');
   const [price, setPrice] = useState(0);
-  const [flavor, setFlavor] = useState(" ");
-  const [description, setDescription] = useState(" ");
-  const [productType, setProductType] = useState(" ");
+  const [flavor, setFlavor] = useState(' ');
+  const [description, setDescription] = useState(' ');
+  const [productType, setProductType] = useState(' ');
 
   const updateProduct = async () => {
     let product = {
@@ -49,7 +49,7 @@ const UpdateItemView = () => {
       description,
       productType,
     };
-    let docRef = await firestore.collection("products").doc(product.id);
+    let docRef = await firestore.collection('products').doc(product.id);
 
     let updateRef = docRef.update(product);
     console.log(updateRef);
@@ -76,7 +76,12 @@ const UpdateItemView = () => {
           type="number"
           value={price}
           onChange={(e) => {
-            setPrice(e.target.value);
+            setPrice(() => {
+              if (e.target.value < 0) {
+                return 0;
+              }
+              return e.target.value;
+            });
           }}
         />
         <label htmlFor="">Product Description</label>

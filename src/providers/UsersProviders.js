@@ -10,8 +10,9 @@ const UsersProviders = (props) => {
       const user = await createUserProfileDoc(userAuth);
       setUser(user);
     });
+    console.log('Test');
     return () => unsubcribe();
-  }, []);
+  }, [auth]);
   console.log(user);
   return (
     // <UsersContext.Provider value={[user, setUser]}>

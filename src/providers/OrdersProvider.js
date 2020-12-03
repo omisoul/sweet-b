@@ -1,6 +1,6 @@
-import React, { useState, useEffect, createContext } from "react";
-import { firestore } from "../firebase";
-import { collectIdAndDocs } from "../utilities";
+import React, { useState, useEffect, createContext } from 'react';
+import { firestore } from '../firebase';
+import { collectIdAndDocs } from '../utilities';
 
 export const OrdersContext = createContext();
 
@@ -9,11 +9,9 @@ const OrdersProvider = (props) => {
   let unsubscribe = null;
   useEffect(() => {
     async function fetchOrders() {
-      unsubscribe = firestore.collection("orders").onSnapshot((snapshot) => {
+      unsubscribe = firestore.collection('orders').onSnapshot((snapshot) => {
         const order = snapshot.docs.map(collectIdAndDocs);
         setOrders(order);
-        console.log(order);
-        console.log("hello");
       });
     }
 
@@ -21,7 +19,7 @@ const OrdersProvider = (props) => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [firestore]);
   return (
     <OrdersContext.Provider value={orders}>
       {props.children}

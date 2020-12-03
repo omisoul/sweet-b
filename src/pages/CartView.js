@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import CartItem from "../components/CartItem";
-import Navbar from "../components/Navbar";
-import OrderSummaryItem from "../components/OrderSummaryItem";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import CartItem from '../components/CartItem';
+import Navbar from '../components/Navbar';
+import OrderSummaryItem from '../components/OrderSummaryItem';
+import { Link } from 'react-router-dom';
 
 const CartView = () => {
   const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
+    JSON.parse(localStorage.getItem('cart')) || []
   );
-  console.log(cart);
   const getTotal = () => {
     let total = 0;
     for (let i of cart) {

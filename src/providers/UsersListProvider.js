@@ -19,7 +19,7 @@ const UsersListProvider = (props) => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [firestore]);
   return (
     <UsersListContext.Provider value={usersList}>
       {props.children}

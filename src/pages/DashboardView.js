@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import UsersListItem from '../components/UsersListItem';
 import { UsersListContext } from '../providers/UsersListProvider';
+import selfcheckout from '../res/selfcheckout.gif';
 
 const DashboardView = () => {
   const users = useContext(UsersListContext);
   return (
     <div className="user-list-page">
-      <p>Test</p>
+      <img src={selfcheckout} alt="" />
     </div>
   );
 };
