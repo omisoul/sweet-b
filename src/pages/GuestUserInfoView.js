@@ -1,39 +1,37 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { firestore } from '../firebase';
 import { UsersContext } from '../providers/UsersProviders';
 
-// Collects user information and updates the user
-const UpdateUserInfoView = () => {
+const GuestUserInfoView = () => {
   const user = useContext(UsersContext);
   const history = useHistory();
+  const [displayName, setName] = useState('');
   const [deliveryLocation, setDeliveryLocation] = useState('Kingston');
   const [telephoneNumber, setTelephoneNumber] = useState('');
   const [address, setAddress] = useState('');
-  const [redirect, setRedirect] = useState(false);
+  const [cart] = useState(JSON.parse(localStorage.getItem('cart')) || []);
 
+  useEffect(() => {
+    emptyCart();
+  }, []);
   const updateUserInfo = async () => {
     let updatedInfo = {
+      displayName,
       deliveryLocation,
       telephoneNumber,
       address,
       updatedInfo: true,
     };
-    if (user) {
-      try {
-        let docRef = await firestore.collection('users').doc(user.uid);
-        await docRef.update(updatedInfo);
-      } catch (error) {
-      } finally {
-        history.go(0);
-      }
-    } else {
-      history.push({
-        pathname: '/checkout/guest',
-        state: {
-          updatedInfo,
-        },
-      });
+    history.push({
+      pathname: '/checkout/guest',
+      state: {
+        updatedInfo,
+      },
+    });
+  };
+  const emptyCart = () => {
+    if (cart.length == 0) {
+      history.replace('/cart');
     }
   };
 
@@ -48,6 +46,12 @@ const UpdateUserInfoView = () => {
       >
         <input
           type="text"
+          value={displayName}
+          required
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="text"
           value={address}
           required
           onChange={(e) => setAddress(e.target.value)}
@@ -56,7 +60,7 @@ const UpdateUserInfoView = () => {
           type="tel"
           value={telephoneNumber}
           required
-          pattern="[0-9]{3}-[0-9]{4}-[0-9]{3}"
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           onChange={(e) => setTelephoneNumber(e.target.value)}
         />
         <select
@@ -72,4 +76,4 @@ const UpdateUserInfoView = () => {
   );
 };
 
-export default UpdateUserInfoView;
+export default GuestUserInfoView;

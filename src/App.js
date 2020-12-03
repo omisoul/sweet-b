@@ -5,6 +5,7 @@ import CatalogView from './pages/CatalogView';
 import CartView from './pages/CartView';
 import AdminDashboardView from './pages/AdminDashboardView';
 import CheckoutOrderView from './pages/CheckoutOrderView';
+import CheckoutGuestOrderView from './pages/CheckoutGuestOrderView';
 
 const App = () => {
   return (
@@ -15,7 +16,8 @@ const App = () => {
           <CartView exact path="/cart" />
           <ItemView exact path="/product/:id" />
           <AdminDashboardView path="/admin-dashboard" />
-          <CheckoutOrderView path="/checkout" />
+          <CheckoutOrderView exact path="/checkout" />
+          <CheckoutGuestOrderView exact path="/checkout/guest" />
         </Switch>
       </Router>
     </div>
