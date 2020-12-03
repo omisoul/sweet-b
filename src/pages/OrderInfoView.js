@@ -11,12 +11,8 @@ const OrderInfoView = () => {
 
   const [order, setOrder] = useState([]);
   console.log(orders);
-  // const [address, setAddress] = useState("")
   const [cart, setCart] = useState([]);
-  // const [deliveryLocation, setDeliveryLocation] = useState("")
-  // const [name, setName] = useState("")
   const [status, setStatus] = useState('');
-  // const [tel, setTel] = useState("")
 
   useEffect(() => {
     for (let i of orders) {
@@ -27,6 +23,15 @@ const OrderInfoView = () => {
       }
     }
   }, [orders]);
+
+  const getTotal = () => {
+    let total = 0;
+    for (let i of cart) {
+      total += i.amount * i.price;
+      console.log(total);
+    }
+    return total;
+  };
 
   const update = async () => {
     try {
@@ -40,23 +45,32 @@ const OrderInfoView = () => {
   }, [status]);
 
   return (
-    <div>
-      {console.log(order.cart)}
+    <div className="order-summary">
+      <h1>Order Summary</h1>
       <h3>Cart</h3>
       <div className="order-view-cart">
-        <h4>Name</h4>
+        <h4 className="h4-cart-summary">Item</h4>
         <h4>Amt</h4>
         <h4>Total</h4>
       </div>
       {order &&
         cart.map((item) => <OrderCartItem key={item.name} item={item} />)}
+      <div className="order-view-cart">
+        <h4 className="order-view-t">Total</h4>
+        <p className="order-view-total">{getTotal()}</p>
+      </div>
       <br />
       <br />
       <p>Email: {order.email}</p>
       <p>Name: {order.displayName}</p>
       <p>Telephone Number: {order.telephoneNumber}</p>
       <p>Address: {order.address}</p>
-      <select value={status} onChange={(e) => setStatus(e.target.value)}>
+      <label htmlFor="status">Status: </label>
+      <select
+        id="status"
+        value={status}
+        onChange={(e) => setStatus(e.target.value)}
+      >
         <option value="Pending">Pending</option>
         <option value="Delivered">Delivered</option>
         <option value="Canceled">Canceled</option>

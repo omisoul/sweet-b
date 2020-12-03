@@ -1,16 +1,15 @@
-import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { firestore } from "../firebase";
-import { UsersContext } from "../providers/UsersProviders";
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { firestore } from '../firebase';
+import { UsersContext } from '../providers/UsersProviders';
 
 // Collects user information and updates the user
 const UpdateUserInfoView = () => {
   const user = useContext(UsersContext);
   const history = useHistory();
-  const [deliveryLocation, setDeliveryLocation] = useState("Kingston");
-  const [telephoneNumber, setTelephoneNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const [redirect, setRedirect] = useState(false);
+  const [deliveryLocation, setDeliveryLocation] = useState('Kingston');
+  const [telephoneNumber, setTelephoneNumber] = useState('');
+  const [address, setAddress] = useState('');
 
   const updateUserInfo = async () => {
     let updatedInfo = {
@@ -20,7 +19,7 @@ const UpdateUserInfoView = () => {
       updatedInfo: true,
     };
     try {
-      let docRef = await firestore.collection("users").doc(user.uid);
+      let docRef = await firestore.collection('users').doc(user.uid);
       await docRef.update(updatedInfo);
     } catch (error) {
     } finally {
@@ -48,7 +47,7 @@ const UpdateUserInfoView = () => {
           type="tel"
           value={telephoneNumber}
           required
-          pattern="[0-9]{3}-[0-9]{4}-[0-9]{3}"
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           onChange={(e) => setTelephoneNumber(e.target.value)}
         />
         <select
