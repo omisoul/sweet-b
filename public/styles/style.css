@@ -625,4 +625,35 @@ a {
 .order-view-name {
   text-align: center;
 }
+
+.dashboard-items {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 150px;
+  -webkit-column-gap: 60px;
+          column-gap: 60px;
+}
+
+.dashboard-card {
+  border-radius: 15px;
+  padding: 10px;
+  background-color: #9377e2;
+  color: #ffffff;
+  -webkit-box-shadow: 5px 10px 8px rgba(136, 136, 136, 0.2);
+          box-shadow: 5px 10px 8px rgba(136, 136, 136, 0.2);
+  text-align: center;
+  min-width: 200px;
+}
+
+.dashboard-card p {
+  font-size: 5rem;
+  font-weight: bolder;
+  margin: 0;
+}
+
+.dashboard-card h4 {
+  margin-bottom: 15px;
+}
 /*# sourceMappingURL=style.css.map */

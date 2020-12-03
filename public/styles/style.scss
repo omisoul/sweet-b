@@ -482,3 +482,29 @@ a {
 .order-view-name {
   text-align: center;
 }
+
+.dashboard-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 150px;
+  column-gap: 60px;
+}
+
+.dashboard-card {
+  border-radius: 15px;
+  padding: 10px;
+  background-color: $primary-color;
+  color: $text-secondary;
+  box-shadow: 5px 10px 8px rgba($color: #888, $alpha: 0.2);
+  text-align: center;
+  min-width: 200px;
+
+  p {
+    font-size: 5rem;
+    font-weight: bolder;
+    margin: 0;
+  }
+  h4 {
+    margin-bottom: 15px;
+  }
+}
