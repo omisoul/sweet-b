@@ -10,7 +10,6 @@ const UpdateUserInfoView = () => {
   const [deliveryLocation, setDeliveryLocation] = useState('Kingston');
   const [telephoneNumber, setTelephoneNumber] = useState('');
   const [address, setAddress] = useState('');
-  const [redirect, setRedirect] = useState(false);
 
   const updateUserInfo = async () => {
     let updatedInfo = {
@@ -56,7 +55,7 @@ const UpdateUserInfoView = () => {
           type="tel"
           value={telephoneNumber}
           required
-          pattern="[0-9]{3}-[0-9]{4}-[0-9]{3}"
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           onChange={(e) => setTelephoneNumber(e.target.value)}
         />
         <select

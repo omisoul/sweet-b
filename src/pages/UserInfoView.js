@@ -56,6 +56,7 @@ const UserInfoView = () => {
       <form className="edit-user-form">
         <input disabled={true} className="edit-user-input" value={user.email} />
         <input
+          required
           className="edit-user-input"
           value={displayName}
           onChange={(e) => {
@@ -64,7 +65,10 @@ const UserInfoView = () => {
           disabled={!edit}
         />
         <input
+          required
           className="edit-user-input"
+          type="tel"
+          pattern="[0-9]{3}-[0-9]{4}-[0-9]{3}"
           value={telephoneNumber}
           onChange={(e) => {
             setTele(e.target.value);
@@ -72,6 +76,7 @@ const UserInfoView = () => {
           disabled={!edit}
         />
         <input
+          required
           className="edit-user-input"
           value={address}
           onChange={(e) => {

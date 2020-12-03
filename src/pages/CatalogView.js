@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
-import { ProductsContext } from "../providers/ProductsProvider";
-import Navbar from "../components/Navbar";
-import CatalogItem from "../components/CatalogItem";
+import React, { useContext } from 'react';
+import { ProductsContext } from '../providers/ProductsProvider';
+import Navbar from '../components/Navbar';
+import CatalogItem from '../components/CatalogItem';
 
 const CatalogView = () => {
   const products = useContext(ProductsContext);
