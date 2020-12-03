@@ -57,7 +57,7 @@ const CheckoutOrder = () => {
         .collection('users')
         .doc(user.uid)
         .update({
-          orders: addToArray(orderDoc.id),
+          orders: [...user.orders, orderDoc.id],
         });
     } catch (error) {
       console.log(error);

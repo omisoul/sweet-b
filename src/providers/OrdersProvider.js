@@ -3,6 +3,8 @@ import { firestore } from '../firebase';
 import { collectIdAndDocs } from '../utilities';
 
 export const OrdersContext = createContext();
+let ordersRef = firestore.collection('orders');
+ordersRef.orderBy('status', 'desc');
 
 const OrdersProvider = (props) => {
   const [orders, setOrders] = useState([]);

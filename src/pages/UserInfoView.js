@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import OrderListItem from '../components/OrderListItem';
 import { firestore } from '../firebase';
 import { UsersListContext } from '../providers/UsersListProvider';
@@ -117,6 +116,7 @@ const UserInfoView = () => {
       </button>
 
       <h2>Orders</h2>
+      {console.log(user.orders)}
       {user.orders &&
         orderList.map((order) => (
           <OrderListItem key={order} user={user} orderList={order} />
