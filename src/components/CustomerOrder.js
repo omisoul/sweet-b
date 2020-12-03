@@ -6,10 +6,12 @@ const CustomerOrder = ({ order }) => {
 
   return (
     <div className="customer-order">
-      <h4>Order ID: {order.id}</h4>
-      <p>Status: {order.status}</p>
-      <p>Address: {order.address}</p>
-      <p>Location: {order.deliveryLocation}</p>
+      <div className="customer-order-desc">
+        <h4>Order ID: {order.id}</h4>
+        <p>Status: {order.status}</p>
+        <p>Address: {order.address}</p>
+        <p>Location: {order.deliveryLocation}</p>
+      </div>
       {order &&
         cart.map((item) => <OrderCartItem key={item.name} item={item} />)}
     </div>

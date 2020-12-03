@@ -541,11 +541,17 @@ a {
 .customer-order {
   margin: 30px 7%;
   padding: 30px;
-  background-color: #fffff2;
-  border-radius: 40px;
-  box-shadow: 2px 0 10px black;
+  border-radius: 5px;
+  border: 2px solid $text-tertiary;
 }
-
+// .customer-order-desc {
+//   display: flex;
+//   justify-content: 'space-between';
+//   align-items: 'center';
+//   p {
+//     margin-left: 10px;
+//   }
+// }
 .order-view-name {
   text-align: center;
 }
